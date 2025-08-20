@@ -1,0 +1,153 @@
+// Avatar in navbar header (outside dropdown)
+.navbar {
+  button {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    &:active,
+    &:focus,
+    &:hover,
+    &:visited {
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+    .navbar-profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--bs-primary);
+      object-fit: cover;
+      background: transparent !important;
+      box-shadow: none !important;
+      display: block;
+      margin: 0;
+      padding: 0;
+      outline: none;
+      box-sizing: border-box;
+    }
+  }
+}
+// Avatar in navbar header (outside dropdown)
+.navbar {
+  button {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    &:active,
+    &:focus,
+    &:hover,
+    &:visited {
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+    .navbar-profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--bs-primary);
+      object-fit: cover;
+      background: transparent !important;
+      box-shadow: none !important;
+      display: block;
+      margin: 0;
+      padding: 0;
+      outline: none;
+      box-sizing: border-box;
+    }
+  }
+}
+/* Remove any parent background or card */
+.navbar-profile-dropdown {
+  position: absolute;
+  right: 0;
+  margin-top: 0.5rem;
+  width: 18rem;
+  min-width: 260px;
+  background: #232b36;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 32px 0 rgba(34, 41, 46, 0.18);
+  border: 1px solid #444;
+  z-index: 50;
+  animation: fade-in 0.2s;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+
+  .navbar-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #2d1a0e;
+    border-radius: 0.75rem 0.75rem 0 0;
+
+    img {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      border: 2px solid var(--bs-primary);
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-weight: bold;
+      color: var(--bs-primary);
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .profile-email {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  .navbar-profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem 0;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      color: #fff;
+      background: transparent;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 400;
+      gap: 0.5rem;
+      transition: background 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        background: #181f29;
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

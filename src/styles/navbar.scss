@@ -1,0 +1,84 @@
+// SASS format for Navbar
+.navbar {
+  background-color: var(--bs-dark);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+
+  &.custom-navbar {
+    height: 42px;
+  }
+
+  .navbar-brand-row {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+
+    .navbar-logo-img,
+    .navbar-logo-m {
+      margin-right: 0.5rem;
+    }
+
+    .navbar-logo-img {
+      height: 72px;
+      width: auto;
+    }
+
+    .navbar-logo-m {
+      line-height: 1;
+      color: #ea6a12;
+      font-size: 52px;
+      font-weight: 800;
+      font-family: ui-sans-serif;
+    }
+
+    .navbar-brand-text {
+      margin-right: 0.75rem;
+      letter-spacing: 1px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .sidebar-toggle {
+      background: #ff7e31;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 0;
+
+      .sidebar-toggle-icon {
+        width: 25px;
+        height: 25px;
+        transition: filter 0.2s;
+      }
+      &:hover .sidebar-toggle-icon circle {
+        filter: brightness(1.3);
+        fill: #ff9331;
+      }
+      &:hover .sidebar-toggle-icon path {
+        stroke: #fffbe6;
+      }
+    }
+  }
+
+  .navbar-profile-container {
+    height: 42px;
+  }
+
+  .navbar-profile-btn {
+    outline: none;
+  }
+}

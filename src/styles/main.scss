@@ -1,0 +1,9 @@
+@use "./variable.scss";
+@use "./sidebar.scss";
+@use "./navbar.scss";
+@use "./navbar-profile.scss";
+body {
+  font-family: ui-sans-serif;
+  background-color: var(--bs-light);
+  overflow-x: hidden;
+}
