@@ -1,20 +1,19 @@
 import mbcplayLogo from "../assets/mbcplay-logo.png";
-import {
-  FaUserCircle,
-  FaCog,
-  FaSignOutAlt,
-  FaUser,
-  FaPalette,
-  FaFont,
-  FaGlobe,
-} from "react-icons/fa";
+import { FaUserCircle, FaCog, FaSignOutAlt, FaUser } from "react-icons/fa";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar: React.FC<{
   sidebarCollapsed?: boolean;
   onSidebarToggle?: () => void;
 }> = ({ sidebarCollapsed, onSidebarToggle }) => {
   const [profileOpen, setProfileOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <nav className="navbar custom-navbar bg-[#232b36] px-6 py-2 flex items-center justify-between border-b border-[#232b36] fixed top-0 left-0 right-0 z-40 w-full">
@@ -134,7 +133,7 @@ const Navbar: React.FC<{
                 </span>
                 <FaCog className="opacity-60" />
               </button>
-              <button>
+              <button onClick={handleLogout}>
                 <span className="flex items-center gap-2">
                   <FaSignOutAlt /> Logout
                 </span>
