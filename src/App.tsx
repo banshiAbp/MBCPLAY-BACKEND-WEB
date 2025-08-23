@@ -9,6 +9,7 @@ import {
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
+import CategoriesPage from "./pages/Categories";
 import "./styles/main.scss";
 import Sidebar from "./components/Sidebar";
 
@@ -55,6 +56,12 @@ const App: React.FC = () => {
             <Route
               path="/dashboard"
               element={token ? <Dashboard /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/media-management/categories"
+              element={
+                token ? <CategoriesPage /> : <Navigate to="/login" replace />
+              }
             />
             {/* Additional routes can be added here */}
           </Routes>

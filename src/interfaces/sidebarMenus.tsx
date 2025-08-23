@@ -12,6 +12,7 @@ import {
   FaUserTie,
   FaAd,
   FaRegListAlt,
+  FaLanguage,
 } from "react-icons/fa";
 
 export interface SidebarSubMenu {
@@ -49,20 +50,42 @@ export const leftMenus: SidebarCategory[] = [
     ],
   },
   {
-    category: "MEDIA MANAGEMENT",
+    category: "ALL MANAGEMENT",
     menus: [
-      { label: "Genres", to: "/genres", icon: <FaLayerGroup /> },
-      { label: "Movies", to: "/movies", icon: <FaFilm /> },
       {
-        label: "TV Shows",
-        to: "/tvshows",
-        icon: <FaTv />,
+        label: "Media Management",
+        to: "/media-management",
+        icon: <FaFilm />,
         submenu: [
-          { label: "Seasons", to: "/seasons", icon: <FaRegListAlt /> },
-          { label: "Episodes", to: "/episodes", icon: <FaRegListAlt /> },
-          { label: "Videos", to: "/videos", icon: <FaRegListAlt /> },
+          {
+            label: "Categories",
+            to: "/media-management/categories",
+            icon: <FaRegListAlt />,
+          },
+          {
+            label: "Genres",
+            to: "/media-management/genres",
+            icon: <FaLayerGroup />,
+          },
+          {
+            label: "Languages",
+            to: "/media-management/languages",
+            icon: <FaLanguage />,
+          },
+          {
+            label: "Maturity Ratings",
+            to: "/media-management/maturity-ratings",
+            icon: <FaLayerGroup />,
+          },
+          {
+            label: "Advertisement",
+            to: "/media-management/advertisement",
+            icon: <FaAd />,
+          },
         ],
       },
+
+      { label: "Movies", to: "/movies", icon: <FaFilm /> },
       {
         label: "Live TV",
         to: "/livetv",

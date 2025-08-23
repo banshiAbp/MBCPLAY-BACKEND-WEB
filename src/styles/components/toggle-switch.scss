@@ -1,0 +1,51 @@
+// ToggleSwitch styles
+
+.custom-toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 16px;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .custom-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #e5393573;
+    border-radius: 12px;
+    transition: background 0.2s;
+    box-shadow: 0 1px 4px 0 #e53935;
+    &:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 0;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 4px 0 #0004;
+    }
+  }
+  &.checked .custom-toggle-slider {
+    background: #e50914;
+    box-shadow: 0 1px 4px 0 #e5091440;
+  }
+  &.checked .custom-toggle-slider:before {
+    transform: translateX(28px);
+  }
+  &.disabled .custom-toggle-slider {
+    border: 1.5px solid #444;
+  }
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
