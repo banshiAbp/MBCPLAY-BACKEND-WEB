@@ -11,6 +11,8 @@ import { Category } from "../../../interfaces/media-management/categoryType";
 import { transformCategoryList } from "../../../interfaces/media-management/categoryTransform";
 import { FaFilter, FaFileExport } from "react-icons/fa";
 import { FaCirclePlus } from "react-icons/fa6";
+import DetailsPopup from "../../../components/DetailsPopup";
+import "../../../styles/components/details-popup.scss";
 
 const CategoriesPage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -106,7 +108,12 @@ const CategoriesPage: React.FC = () => {
           </span>
           Advanced Filter
         </button>
-        <button className="categories-new-btn">
+        <button
+          className="categories-new-btn"
+          onClick={() =>
+            navigate("/media-management/categories/manage-categories")
+          }
+        >
           <span className="categories-btn-icon">
             <FaCirclePlus />
           </span>
@@ -226,27 +233,13 @@ const CategoriesPage: React.FC = () => {
         onPageChange={(p) => setPage(Math.max(1, Math.min(totalPages, p)))}
       />
 
-      {/* Description Modal */}
-      {descModal.open && (
-        <div
-          className="categories-modal-overlay"
-          onClick={() => setDescModal({ open: false, text: "" })}
-        >
-          <div
-            className="categories-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h4>Description</h4>
-            <div>{descModal.text}</div>
-            <button
-              className="categories-modal-close"
-              onClick={() => setDescModal({ open: false, text: "" })}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Description Modal (Reusable) */}
+      <DetailsPopup
+        open={descModal.open}
+        title="Description"
+        details={descModal.text}
+        onClose={() => setDescModal({ open: false, text: "" })}
+      />
     </div>
   );
 };

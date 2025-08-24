@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import CategoriesPage from "./pages/media-management/categories/Categories";
+import ManageCategories from "./pages/media-management/categories/ManageCategories";
 import "./styles/main.scss";
 import Sidebar from "./components/Sidebar";
 
@@ -61,6 +62,12 @@ const App: React.FC = () => {
               path="/media-management/categories"
               element={
                 token ? <CategoriesPage /> : <Navigate to="/login" replace />
+              }
+            />
+            <Route
+              path="/media-management/categories/manage-categories"
+              element={
+                token ? <ManageCategories /> : <Navigate to="/login" replace />
               }
             />
             {/* Additional routes can be added here */}

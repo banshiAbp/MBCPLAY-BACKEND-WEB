@@ -2,6 +2,7 @@ import mbcplayLogo from "../assets/mbcplay-logo.png";
 import { FaUserCircle, FaCog, FaSignOutAlt, FaUser } from "react-icons/fa";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import avatar from "../assets/avatar.svg";
 
 const Navbar: React.FC<{
   sidebarCollapsed?: boolean;
@@ -97,11 +98,7 @@ const Navbar: React.FC<{
           aria-expanded={profileOpen}
           className="flex items-center bg-transparent border-none p-0 focus:outline-none navbar-profile-btn"
         >
-          <img
-            src="https://randomuser.me/api/portraits/men/32.jpg"
-            alt="Profile"
-            className="navbar-profile-avatar"
-          />
+          <img src={avatar} alt="Profile" className="navbar-profile-avatar" />
         </button>
         {profileOpen && (
           <div
@@ -111,10 +108,7 @@ const Navbar: React.FC<{
             onMouseLeave={() => setProfileOpen(false)}
           >
             <div className="navbar-profile-header">
-              <img
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                alt="Profile"
-              />
+              <img src={avatar} alt="Profile" />
               <div>
                 <div className="profile-name">Ivan2 Norris2</div>
                 <div className="profile-email">demo@streamit.com</div>

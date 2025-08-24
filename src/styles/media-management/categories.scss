@@ -60,6 +60,9 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
+      &:hover {
+        background: var(--bs-primary-hover-red);
+      }
     }
 
     .categories-btn-icon {
