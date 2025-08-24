@@ -1,15 +1,8 @@
-$primary-bg: #151c24;
-$secondary-bg: #181f29;
-$header-bg: #232b36;
-$primary-red: #e53935;
-$primary-orange: #ff9800;
-$primary-green: #4caf50;
-$white: #fff;
-$gray: #ccc;
+@use "../variable.scss";
 
 .categories-page {
   padding: 24px;
-  background: $primary-bg;
+  background: var(--bs-page-bg);
   min-height: 100vh;
 
   .categories-action-row {
@@ -20,8 +13,8 @@ $gray: #ccc;
 
     .categories-action-select,
     .categories-filter-select {
-      background: $header-bg;
-      color: $white;
+      background: var(--bs-header-bg);
+      color: var(--bs-white);
       border: none;
       border-radius: 6px;
       font-size: 15px;
@@ -29,8 +22,8 @@ $gray: #ccc;
     }
 
     .categories-search-input {
-      background: $header-bg;
-      color: $white;
+      background: var(--bs-header-bg);
+      color: var(--bs-white);
       border: none;
       border-radius: 6px;
       font-size: 15px;
@@ -40,8 +33,8 @@ $gray: #ccc;
 
     .categories-advanced-filter-btn,
     .categories-export-btn {
-      background: $header-bg;
-      color: $white;
+      background: var(--bs-header-bg);
+      color: var(--bs-white);
       border: none;
       border-radius: 6px;
       font-size: 15px;
@@ -56,8 +49,8 @@ $gray: #ccc;
 
     .categories-apply-btn,
     .categories-new-btn {
-      background: $primary-red;
-      color: $white;
+      background: var(--bs-primary-red);
+      color: var(--bs-white);
       border: none;
       border-radius: 6px;
       font-size: 15px;
@@ -83,7 +76,7 @@ $gray: #ccc;
   }
 
   .categories-table-container {
-    background: $secondary-bg;
+    background: var(--bs-secondary-bg);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 8px #0002;
@@ -95,8 +88,8 @@ $gray: #ccc;
 
       thead {
         .categories-table-header-row {
-          background: $header-bg;
-          color: $white;
+          background: var(--bs-header-bg);
+          color: var(--bs-white);
           font-weight: 600;
           font-size: 15px;
 
@@ -131,9 +124,9 @@ $gray: #ccc;
 
       tbody {
         .categories-table-row {
-          border-bottom: 1px solid $header-bg;
-          color: $white;
-          background: $secondary-bg;
+          border-bottom: 1px solid var(--bs-header-bg);
+          color: var(--bs-white);
+          background: var(--bs-secondary-bg);
 
           td {
             padding: 14px 10px;
@@ -156,7 +149,7 @@ $gray: #ccc;
             }
 
             .categories-table-description-more {
-              color: $primary-red;
+              color: var(--bs-primary-red);
               cursor: pointer;
               font-weight: 600;
             }
@@ -165,13 +158,13 @@ $gray: #ccc;
               width: 32px;
               height: 32px;
               border-radius: 6px;
-              background: $header-bg;
+              background: var(--bs-header-bg);
             }
 
             .categories-table-edit-btn {
               cursor: pointer;
-              background: $primary-orange;
-              color: $white;
+              background: var(--bs-primary-orange);
+              color: var(--bs-white);
               border-radius: 6px;
               padding: 6px 10px;
               margin-right: 6px;
@@ -184,42 +177,11 @@ $gray: #ccc;
   }
 
   .categories-loading {
-    color: $white;
+    color: var(--bs-white);
     padding: 32px;
   }
   .categories-error {
     color: red;
     padding: 32px;
-  }
-
-  // Modal styles
-  .categories-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  .categories-modal {
-    background: $white;
-    color: #222;
-    padding: 24px;
-    border-radius: 8px;
-    min-width: 300px;
-  }
-  .categories-modal-close {
-    margin-top: 16px;
-    background: $primary-red;
-    color: $white;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 24px;
-    font-weight: 600;
-    cursor: pointer;
   }
 }

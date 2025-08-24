@@ -3,7 +3,8 @@
 @use "./navbar.scss";
 @use "./navbar-profile.scss";
 body {
-  font-family: ui-sans-serif;
-  background-color: var(--bs-light);
+  font-family: "Roboto", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  background-color: var(--bs-page-bg);
   overflow-x: hidden;
 }
