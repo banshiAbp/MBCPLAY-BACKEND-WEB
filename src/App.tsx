@@ -9,7 +9,7 @@ import {
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
-import CategoriesPage from "./pages/Categories";
+import CategoriesPage from "./pages/media-management/categories/Categories";
 import "./styles/main.scss";
 import Sidebar from "./components/Sidebar";
 

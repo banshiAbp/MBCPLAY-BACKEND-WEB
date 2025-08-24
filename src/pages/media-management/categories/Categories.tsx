@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PAGE_SIZE } from "../config/globalVariable";
-import API_BASE_URL from "../config/api";
-import Breadcrumb from "../components/Breadcrumb";
-import Pagination from "../components/Pagination";
-import ToggleSwitch from "../components/ToggleSwitch";
-import Checkbox from "../components/Checkbox";
-import "../styles/media-management/categories.scss";
-import { Category } from "../interfaces/media-management/categoryType";
-import { transformCategoryList } from "../interfaces/media-management/categoryTransform";
+import { PAGE_SIZE } from "../../../config/globalVariable";
+import API_BASE_URL from "../../../config/api";
+import Breadcrumb from "../../../components/Breadcrumb";
+import Pagination from "../../../components/Pagination";
+import ToggleSwitch from "../../../components/ToggleSwitch";
+import Checkbox from "../../../components/Checkbox";
+import "../../../styles/media-management/categories.scss";
+import { Category } from "../../../interfaces/media-management/categoryType";
+import { transformCategoryList } from "../../../interfaces/media-management/categoryTransform";
+import { FaFilter, FaFileExport } from "react-icons/fa";
+import { FaCirclePlus } from "react-icons/fa6";
 
 const CategoriesPage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -81,7 +83,12 @@ const CategoriesPage: React.FC = () => {
           <option>Export</option>
         </select>
         <button className="categories-apply-btn">Apply</button>
-        <button className="categories-export-btn">Export</button>
+        <button className="categories-export-btn">
+          <span className="categories-btn-icon">
+            <FaFileExport />
+          </span>
+          Export
+        </button>
         <div className="categories-action-spacer" />
         <select className="categories-filter-select">
           <option>All</option>
@@ -94,9 +101,17 @@ const CategoriesPage: React.FC = () => {
           className="categories-search-input"
         />
         <button className="categories-advanced-filter-btn">
+          <span className="categories-btn-icon">
+            <FaFilter />
+          </span>
           Advanced Filter
         </button>
-        <button className="categories-new-btn">New</button>
+        <button className="categories-new-btn">
+          <span className="categories-btn-icon">
+            <FaCirclePlus />
+          </span>
+          New
+        </button>
       </div>
 
       <div className="categories-table-container">

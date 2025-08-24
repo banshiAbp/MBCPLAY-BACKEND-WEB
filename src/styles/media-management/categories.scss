@@ -48,6 +48,10 @@ $gray: #ccc;
       padding: 8px 24px;
       font-weight: 600;
       margin-right: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
     }
 
     .categories-apply-btn,
@@ -59,6 +63,18 @@ $gray: #ccc;
       font-size: 15px;
       padding: 8px 24px;
       font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .categories-btn-icon {
+      display: inline-flex;
+      align-items: center;
+      font-size: 1.1em;
+      margin-right: 4px;
+      cursor: pointer;
     }
 
     .categories-action-spacer {
