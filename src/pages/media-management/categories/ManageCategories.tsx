@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import ToggleSwitch from "../../../components/ToggleSwitch";
 import Breadcrumb from "../../../components/Breadcrumb";
 import browseIcon from "../../../assets/browse.svg";
+import Loader from "../../../components/Loader";
+import "../../../styles/loader.scss";
 import "../../../styles/media-management/manage-categories.scss";
 
 function ManageCategories() {
@@ -22,6 +24,7 @@ function ManageCategories() {
   const [formMessageType, setFormMessageType] = useState<
     "success" | "error" | ""
   >("");
+  const [saving, setSaving] = useState(false);
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setImageUploadError("");
@@ -36,7 +39,6 @@ function ManageCategories() {
           token,
           onProgress: (progress) => setUploadProgress(progress),
         });
-        console.log(result);
         setUploading(false);
         if (
           (result.status === 200 || result.status === 201) &&
@@ -63,6 +65,7 @@ function ManageCategories() {
       setTitleError("Title is required");
       return;
     }
+    setSaving(true);
     try {
       const token = localStorage.getItem("token");
       const { response, data } = await submitCategory({
@@ -86,147 +89,152 @@ function ManageCategories() {
     } catch (err) {
       setFormMessage("Network error.");
       setFormMessageType("error");
+    } finally {
+      setSaving(false);
     }
   };
 
   return (
-    <div className="categories-page">
-      {formMessage && (
-        <div
-          style={{
-            marginBottom: 16,
-            padding: "10px 16px",
-            borderRadius: 6,
-            fontWeight: 600,
-            color: formMessageType === "success" ? "#389e3d" : "#ff4d4f",
-            background: formMessageType === "success" ? "#e6f9ea" : "#fff1f0",
-            border: `1px solid ${
-              formMessageType === "success" ? "#b7eb8f" : "#ffa39e"
-            }`,
-            textAlign: "center",
-            fontSize: 16,
-          }}
-        >
-          {formMessage}
+    <>
+      <Loader visible={saving} />
+      <div className="categories-page">
+        {formMessage && (
+          <div
+            style={{
+              marginBottom: 16,
+              padding: "10px 16px",
+              borderRadius: 6,
+              fontWeight: 600,
+              color: formMessageType === "success" ? "#389e3d" : "#ff4d4f",
+              background: formMessageType === "success" ? "#e6f9ea" : "#fff1f0",
+              border: `1px solid ${
+                formMessageType === "success" ? "#b7eb8f" : "#ffa39e"
+              }`,
+              textAlign: "center",
+              fontSize: 16,
+            }}
+          >
+            {formMessage}
+          </div>
+        )}
+        <Breadcrumb
+          items={[
+            { label: "Dashboard", path: "/dashboard" },
+            { label: "Media Management", path: "/media-management" },
+            { label: "Categories", path: "/media-management/categories" },
+            { label: "Manage Category" },
+          ]}
+        />
+        <div className="categories-back-row">
+          <span className="categories-back-btn" onClick={() => navigate(-1)}>
+            &laquo; Back
+          </span>
         </div>
-      )}
-      <Breadcrumb
-        items={[
-          { label: "Dashboard", path: "/dashboard" },
-          { label: "Media Management", path: "/media-management" },
-          { label: "Categories", path: "/media-management/categories" },
-          { label: "Manage Category" },
-        ]}
-      />
-      <div className="categories-back-row">
-        <span className="categories-back-btn" onClick={() => navigate(-1)}>
-          &laquo; Back
-        </span>
-      </div>
-      <div className="categories-form-card">
-        <div className="categories-form-row">
-          {/* Image Upload */}
-          <div className="categories-form-col">
-            <div className="categories-form-label">Image</div>
-            <div className="categories-image-upload-area">
-              <div className="categories-image-upload-preview">
-                {uploading && (
-                  <FileUploadProgress
-                    progress={uploadProgress}
-                    visible={uploading}
-                  />
-                )}
-                {imageUrl ? (
-                  <>
-                    <img
-                      src={imageUrl}
-                      alt="preview"
-                      className="categories-image-preview-img"
+        <div className="categories-form-card">
+          <div className="categories-form-row">
+            {/* Image Upload */}
+            <div className="categories-form-col">
+              <div className="categories-form-label">Image</div>
+              <div className="categories-image-upload-area">
+                <div className="categories-image-upload-preview">
+                  {uploading && (
+                    <FileUploadProgress
+                      progress={uploadProgress}
+                      visible={uploading}
                     />
-                    <span
-                      className="categories-image-remove-btn"
-                      title="Remove"
-                      onClick={() => {
-                        setImageUrl("");
-                      }}
-                    >
-                      &#10060;
-                    </span>
-                  </>
-                ) : (
-                  <label className="categories-image-upload-label">
-                    <img
-                      src={browseIcon}
-                      alt="Browse"
-                      className="categories-image-upload-icon"
-                    />
-                    <span className="categories-browse-text">Browse</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="categories-browse-input"
-                      disabled={uploading}
-                    />
-                  </label>
-                )}
-                {imageUploadError &&
-                  imageUploadError !== "Image uploaded successfully" && (
-                    <div
-                      style={{ color: "#ff4d4f", fontSize: 14, marginTop: 4 }}
-                    >
-                      {imageUploadError}
-                    </div>
                   )}
+                  {imageUrl ? (
+                    <>
+                      <img
+                        src={imageUrl}
+                        alt="preview"
+                        className="categories-image-preview-img"
+                      />
+                      <span
+                        className="categories-image-remove-btn"
+                        title="Remove"
+                        onClick={() => {
+                          setImageUrl("");
+                        }}
+                      >
+                        &#10060;
+                      </span>
+                    </>
+                  ) : (
+                    <label className="categories-image-upload-label">
+                      <img
+                        src={browseIcon}
+                        alt="Browse"
+                        className="categories-image-upload-icon"
+                      />
+                      <span className="categories-browse-text">Browse</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="categories-browse-input"
+                        disabled={uploading}
+                      />
+                    </label>
+                  )}
+                  {imageUploadError &&
+                    imageUploadError !== "Image uploaded successfully" && (
+                      <div
+                        style={{ color: "#ff4d4f", fontSize: 14, marginTop: 4 }}
+                      >
+                        {imageUploadError}
+                      </div>
+                    )}
+                </div>
               </div>
             </div>
-          </div>
-          {/* Name */}
-          <div className="categories-form-col">
-            <div className="categories-form-label">
-              Name<span className="categories-required">*</span>
-            </div>
-            <input
-              className="categories-form-input"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                if (titleError && e.target.value.trim()) setTitleError("");
-              }}
-              placeholder="Action"
-            />
-            {titleError && (
-              <div style={{ color: "#ff4d4f", fontSize: 14, marginTop: 4 }}>
-                {titleError}
+            {/* Name */}
+            <div className="categories-form-col">
+              <div className="categories-form-label">
+                Name<span className="categories-required">*</span>
               </div>
-            )}
-            <div className="categories-form-label categories-form-label-status">
-              Status
+              <input
+                className="categories-form-input"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (titleError && e.target.value.trim()) setTitleError("");
+                }}
+                placeholder="Action"
+              />
+              {titleError && (
+                <div style={{ color: "#ff4d4f", fontSize: 14, marginTop: 4 }}>
+                  {titleError}
+                </div>
+              )}
+              <div className="categories-form-label categories-form-label-status">
+                Status
+              </div>
+              <div className="categories-form-status-row">
+                <span className="categories-status-active">Active</span>
+                <ToggleSwitch checked={status} onChange={setStatus} />
+              </div>
             </div>
-            <div className="categories-form-status-row">
-              <span className="categories-status-active">Active</span>
-              <ToggleSwitch checked={status} onChange={setStatus} />
+            {/* Description */}
+            <div className="categories-form-col">
+              <div className="categories-form-label">Description</div>
+              <textarea
+                className="categories-form-textarea"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Provide the description of the categories!!!"
+                rows={6}
+              />
             </div>
           </div>
-          {/* Description */}
-          <div className="categories-form-col">
-            <div className="categories-form-label">Description</div>
-            <textarea
-              className="categories-form-textarea"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Provide the description of the categories!!!"
-              rows={6}
-            />
+          <div className="categories-form-footer">
+            <button className="categories-form-save-btn" onClick={handleSave}>
+              Save
+            </button>
           </div>
-        </div>
-        <div className="categories-form-footer">
-          <button className="categories-form-save-btn" onClick={handleSave}>
-            Save
-          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
