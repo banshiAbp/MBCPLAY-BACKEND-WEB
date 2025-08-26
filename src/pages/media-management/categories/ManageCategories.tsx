@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
 import FileUploadProgress from "../../../components/FileUploadProgress";
-import API_BASE_URL from "../../../config/api";
+import { submitCategory } from "../../../services/media-management/categories/createNewCategoryService";
+import { uploadCategoryImage } from "../../../services/media-management/categories/uploadCategory";
 import { useNavigate } from "react-router-dom";
 import ToggleSwitch from "../../../components/ToggleSwitch";
 import Breadcrumb from "../../../components/Breadcrumb";
@@ -22,49 +23,34 @@ function ManageCategories() {
     "success" | "error" | ""
   >("");
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setImageUploadError("");
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setUploading(true);
       setUploadProgress(0);
-      const formData = new FormData();
-      formData.append("file", file);
+      const token = localStorage.getItem("token");
       try {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", `${API_BASE_URL}utility/upload-image`);
-        const token = localStorage.getItem("token");
-        if (token) xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            setUploadProgress(Math.round((event.loaded / event.total) * 100));
-          }
-        };
-        xhr.onload = () => {
-          setUploading(false);
-          try {
-            const data = JSON.parse(xhr.responseText);
-            if (data.code === 200 && data.data.public_url) {
-              // use server path for preview and submission
-              setImageUrl(data.data.public_url);
-              // clear local preview, always use imageUrl
-              setUploadProgress(100);
-              // Do NOT set any success message here
-            } else {
-              setImageUploadError(data.message || "Image upload failed");
-            }
-          } catch {
-            setImageUploadError("Image upload failed");
-          }
-        };
-        xhr.onerror = () => {
-          setUploading(false);
-          setImageUploadError("Image upload failed");
-        };
-        xhr.send(formData);
-      } catch (err) {
+        const result = await uploadCategoryImage({
+          file,
+          token,
+          onProgress: (progress) => setUploadProgress(progress),
+        });
+        console.log(result);
         setUploading(false);
-        setImageUploadError("Image upload failed");
+        if (
+          (result.status === 200 || result.status === 201) &&
+          result.data &&
+          result.data.public_url
+        ) {
+          setImageUrl(result.data.public_url);
+          setUploadProgress(100);
+        } else {
+          setImageUploadError(result.message || "Image upload failed");
+        }
+      } catch (err: any) {
+        setUploading(false);
+        setImageUploadError(err?.message || "Image upload failed");
       }
     }
   };
@@ -79,20 +65,13 @@ function ManageCategories() {
     }
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${API_BASE_URL}category/manage`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
-        body: JSON.stringify({
-          categoryTitle: name,
-          categoryDescription: description,
-          categoryImagePath: imageUrl || "",
-          categoryStatus: status,
-        }),
+      const { response, data } = await submitCategory({
+        name,
+        description,
+        imageUrl,
+        status,
+        token,
       });
-      const data = await response.json();
       if (response.ok) {
         setFormMessage("Category saved successfully!");
         setFormMessageType("success");

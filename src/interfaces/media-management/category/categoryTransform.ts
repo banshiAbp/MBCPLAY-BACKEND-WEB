@@ -1,4 +1,3 @@
-// src/interfaces/media-management/categoryTransform.ts
 import { Category } from "./categoryType";
 
 export function transformCategoryApiResponse(apiCategory: any): Category {
