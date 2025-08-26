@@ -7,12 +7,12 @@ import {
   Navigate,
 } from "react-router-dom";
 import Login from "./pages/Login";
-import Navbar from "./components/Navbar";
+import Navbar from "./layouts/Navbar";
 import Dashboard from "./pages/Dashboard";
 import CategoriesPage from "./pages/media-management/categories/Categories";
 import ManageCategories from "./pages/media-management/categories/ManageCategories";
 import "./styles/main.scss";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./layouts/Sidebar";
 
 const App: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
