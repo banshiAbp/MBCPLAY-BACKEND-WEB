@@ -1,8 +1,9 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import FileUploadProgress from "../../../components/FileUploadProgress";
 import { submitCategory } from "../../../services/media-management/categories/createNewCategoryService";
 import { uploadCategoryImage } from "../../../services/media-management/categories/uploadCategory";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getCategoryDetail } from "../../../services/media-management/categories/getCategoryDetail";
 import ToggleSwitch from "../../../components/ToggleSwitch";
 import Breadcrumb from "../../../components/Breadcrumb";
 import browseIcon from "../../../assets/browse.svg";
@@ -11,10 +12,11 @@ import "../../../styles/loader.scss";
 import "../../../styles/media-management/manage-categories.scss";
 
 function ManageCategories() {
+  const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState(""); // server path
+  const [imageUrl, setImageUrl] = useState("");
   const [status, setStatus] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -25,6 +27,26 @@ function ManageCategories() {
     "success" | "error" | ""
   >("");
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // If editing, fetch category details
+  useEffect(() => {
+    if (id) {
+      setLoading(true);
+      const fetchCategory = async () => {
+        const token = localStorage.getItem("token");
+        const { data } = await getCategoryDetail({ id, token });
+        if (data && data.data) {
+          setName(data.data.category_title || "");
+          setDescription(data.data.category_description || "");
+          setImageUrl(data.data.category_image_path || "");
+          setStatus(Boolean(data.data.category_status));
+        }
+        setLoading(false);
+      };
+      fetchCategory();
+    }
+  }, [id]);
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setImageUploadError("");
@@ -74,16 +96,24 @@ function ManageCategories() {
         imageUrl,
         status,
         token,
+        ...(id ? { id } : {}),
       });
       if (response.ok) {
-        setFormMessage("Category saved successfully!");
+        setFormMessage(
+          id ? "Category updated successfully!" : "Category saved successfully!"
+        );
         setFormMessageType("success");
-        setName("");
-        setDescription("");
-        setImageUrl("");
-        setStatus(true);
+        if (!id) {
+          setName("");
+          setDescription("");
+          setImageUrl("");
+          setStatus(true);
+        }
       } else {
-        setFormMessage(data.message || "Failed to save category.");
+        setFormMessage(
+          data.message ||
+            (id ? "Failed to update category." : "Failed to save category.")
+        );
         setFormMessageType("error");
       }
     } catch (err) {
@@ -96,7 +126,7 @@ function ManageCategories() {
 
   return (
     <>
-      <Loader visible={saving} />
+      <Loader visible={saving || loading} />
       <div className="categories-page">
         {formMessage && (
           <div
@@ -122,7 +152,7 @@ function ManageCategories() {
             { label: "Dashboard", path: "/dashboard" },
             { label: "Media Management", path: "/media-management" },
             { label: "Categories", path: "/media-management/categories" },
-            { label: "Manage Category" },
+            { label: id ? "Edit Category" : "Manage Category" },
           ]}
         />
         <div className="categories-back-row">
@@ -229,7 +259,7 @@ function ManageCategories() {
           </div>
           <div className="categories-form-footer">
             <button className="categories-form-save-btn" onClick={handleSave}>
-              Save
+              {id ? "Update" : "Save"}
             </button>
           </div>
         </div>

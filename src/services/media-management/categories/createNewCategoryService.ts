@@ -6,15 +6,22 @@ export async function submitCategory({
   imageUrl,
   status,
   token,
+  id,
 }: {
   name: string;
   description: string;
   imageUrl: string;
   status: boolean;
   token: string | null;
+  id?: string;
 }) {
-  const response = await fetch(`${API_BASE_URL}category/manage`, {
-    method: "POST",
+  const isUpdate = Boolean(id);
+  const url = isUpdate
+    ? `${API_BASE_URL}category/manage/${id}`
+    : `${API_BASE_URL}category/manage`;
+  const method = isUpdate ? "PUT" : "POST";
+  const response = await fetch(url, {
+    method,
     headers: {
       "Content-Type": "application/json",
       Authorization: token ? `Bearer ${token}` : "",

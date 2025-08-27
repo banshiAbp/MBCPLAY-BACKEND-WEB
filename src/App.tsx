@@ -70,6 +70,12 @@ const App: React.FC = () => {
                 token ? <ManageCategories /> : <Navigate to="/login" replace />
               }
             />
+            <Route
+              path="/media-management/categories/edit/:id"
+              element={
+                token ? <ManageCategories /> : <Navigate to="/login" replace />
+              }
+            />
             {/* Additional routes can be added here */}
           </Routes>
         </main>
