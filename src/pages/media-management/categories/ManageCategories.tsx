@@ -8,6 +8,8 @@ import ToggleSwitch from "../../../components/ToggleSwitch";
 import Breadcrumb from "../../../components/Breadcrumb";
 import browseIcon from "../../../assets/browse.svg";
 import Loader from "../../../components/Loader";
+import StatusMessage from "../../../components/StatusMessage";
+import "../../../styles/components/status-message.scss";
 import "../../../styles/loader.scss";
 import "../../../styles/media-management/manage-categories.scss";
 
@@ -128,24 +130,15 @@ function ManageCategories() {
     <>
       <Loader visible={saving || loading} />
       <div className="categories-page">
-        {formMessage && (
-          <div
-            style={{
-              marginBottom: 16,
-              padding: "10px 16px",
-              borderRadius: 6,
-              fontWeight: 600,
-              color: formMessageType === "success" ? "#389e3d" : "#ff4d4f",
-              background: formMessageType === "success" ? "#e6f9ea" : "#fff1f0",
-              border: `1px solid ${
-                formMessageType === "success" ? "#b7eb8f" : "#ffa39e"
-              }`,
-              textAlign: "center",
-              fontSize: 16,
+        {formMessage && formMessageType && (
+          <StatusMessage
+            type={formMessageType}
+            message={formMessage}
+            onClose={() => {
+              setFormMessage("");
+              setFormMessageType("");
             }}
-          >
-            {formMessage}
-          </div>
+          />
         )}
         <Breadcrumb
           items={[
