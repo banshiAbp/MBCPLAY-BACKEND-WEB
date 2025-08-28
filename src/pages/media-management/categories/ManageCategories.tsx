@@ -30,25 +30,36 @@ function ManageCategories() {
   >("");
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [sessionExpired, setSessionExpired] = useState("");
 
   // If editing, fetch category details
   useEffect(() => {
     if (id) {
       setLoading(true);
       const fetchCategory = async () => {
-        const token = localStorage.getItem("token");
-        const { data } = await getCategoryDetail({ id, token });
-        if (data && data.data) {
-          setName(data.data.category_title || "");
-          setDescription(data.data.category_description || "");
-          setImageUrl(data.data.category_image_path || "");
-          setStatus(Boolean(data.data.category_status));
+        try {
+          const token = localStorage.getItem("token");
+          const { data } = await getCategoryDetail({
+            id,
+            token,
+            navigate,
+            setSessionExpired,
+          });
+          if (data && data.data) {
+            setName(data.data.category_title || "");
+            setDescription(data.data.category_description || "");
+            setImageUrl(data.data.category_image_path || "");
+            setStatus(Boolean(data.data.category_status));
+          }
+        } catch (e) {
+          // handled by fetchWithAuth
+        } finally {
+          setLoading(false);
         }
-        setLoading(false);
       };
       fetchCategory();
     }
-  }, [id]);
+  }, [id, navigate]);
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setImageUploadError("");
@@ -62,6 +73,8 @@ function ManageCategories() {
           file,
           token,
           onProgress: (progress) => setUploadProgress(progress),
+          navigate,
+          setSessionExpired,
         });
         setUploading(false);
         if (
@@ -82,6 +95,7 @@ function ManageCategories() {
   };
 
   const handleSave = async () => {
+    if (sessionExpired) return;
     setTitleError("");
     setFormMessage("");
     setFormMessageType("");
@@ -130,6 +144,13 @@ function ManageCategories() {
     <>
       <Loader visible={saving || loading} />
       <div className="categories-page">
+        {sessionExpired && (
+          <StatusMessage
+            type="error"
+            message={sessionExpired}
+            onClose={() => setSessionExpired("")}
+          />
+        )}
         {formMessage && formMessageType && (
           <StatusMessage
             type={formMessageType}

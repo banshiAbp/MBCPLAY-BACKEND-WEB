@@ -167,7 +167,7 @@
           box-shadow: 0 2px 8px #0003;
           transition: background 0.2s;
           &:hover {
-            background: #ff7e31;
+            background: var(--bs-primary-hover-red);
           }
         }
       }
