@@ -1,12 +1,11 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import FileUploadProgress from "../../../components/FileUploadProgress";
+import ImageUpload from "../../../components/ImageUpload";
 import { submitCategory } from "../../../services/media-management/categories/createNewCategoryService";
 import { uploadCategoryImage } from "../../../services/media-management/categories/uploadCategory";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCategoryDetail } from "../../../services/media-management/categories/getCategoryDetail";
 import ToggleSwitch from "../../../components/ToggleSwitch";
 import Breadcrumb from "../../../components/Breadcrumb";
-import browseIcon from "../../../assets/browse.svg";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
 import "../../../styles/components/status-message.scss";
@@ -178,59 +177,16 @@ function ManageCategories() {
           <div className="categories-form-row">
             {/* Image Upload */}
             <div className="categories-form-col">
-              <div className="categories-form-label">Image</div>
-              <div className="categories-image-upload-area">
-                <div className="categories-image-upload-preview">
-                  {uploading && (
-                    <FileUploadProgress
-                      progress={uploadProgress}
-                      visible={uploading}
-                    />
-                  )}
-                  {imageUrl ? (
-                    <>
-                      <img
-                        src={imageUrl}
-                        alt="preview"
-                        className="categories-image-preview-img"
-                      />
-                      <span
-                        className="categories-image-remove-btn"
-                        title="Remove"
-                        onClick={() => {
-                          setImageUrl("");
-                        }}
-                      >
-                        &#10060;
-                      </span>
-                    </>
-                  ) : (
-                    <label className="categories-image-upload-label">
-                      <img
-                        src={browseIcon}
-                        alt="Browse"
-                        className="categories-image-upload-icon"
-                      />
-                      <span className="categories-browse-text">Browse</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="categories-browse-input"
-                        disabled={uploading}
-                      />
-                    </label>
-                  )}
-                  {imageUploadError &&
-                    imageUploadError !== "Image uploaded successfully" && (
-                      <div
-                        style={{ color: "#ff4d4f", fontSize: 14, marginTop: 4 }}
-                      >
-                        {imageUploadError}
-                      </div>
-                    )}
-                </div>
-              </div>
+              <ImageUpload
+                imageUrl={imageUrl}
+                uploading={uploading}
+                uploadProgress={uploadProgress}
+                imageUploadError={imageUploadError}
+                onRemove={() => setImageUrl("")}
+                onChange={handleImageChange}
+                disabled={uploading}
+                label="Category Image"
+              />
             </div>
             {/* Name */}
             <div className="categories-form-col">

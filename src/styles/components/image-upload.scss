@@ -1,0 +1,83 @@
+@use "../variable.scss";
+// Image upload styles moved from manage-categories.scss
+.image-upload-area {
+  background: none;
+  border: 2px dashed var(--bs-gray);
+  border-radius: 10px;
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  .image-upload-label {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+    margin: 0 auto;
+  }
+  .image-upload-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+  .browse-text {
+    color: var(--bs-gray);
+    font-size: 15px;
+  }
+  .browse-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .image-upload-preview {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .image-preview-img {
+    max-width: 150px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 2px solid var(--bs-header-bg);
+    margin: 0 auto;
+    background: var(--bs-header-bg);
+  }
+  .image-remove-btn {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background: var(--bs-danger);
+    color: var(--bs-white);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid var(--bs-primary-red);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: background 0.25s, transform 0.2s;
+    &:hover {
+      background: var(--bs-primary-hover-red);
+      transform: scale(1.1);
+    }
+  }
+}
