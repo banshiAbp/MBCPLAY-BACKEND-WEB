@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PAGE_SIZE } from "../../../config/globalVariable";
 import API_BASE_URL from "../../../config/api";
+import { fetchWithAuth } from "../../../utils/fetchWithAuth";
 import Breadcrumb from "../../../components/Breadcrumb";
 import Pagination from "../../../components/Pagination";
 import ToggleSwitch from "../../../components/ToggleSwitch";
@@ -28,19 +29,20 @@ const CategoriesPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login", { replace: true });
-      return;
-    }
-    setLoading(true);
-    fetch(`${API_BASE_URL}category/list?page_no=${page}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchCategories = async () => {
+      setLoading(true);
+      try {
+        const response = await fetchWithAuth(
+          `${API_BASE_URL}category/list?page_no=${page}`,
+          {
+            method: "GET",
+            headers: {
+              accept: "application/json",
+            },
+          },
+          navigate
+        );
+        const data = await response.json();
         const tmpData = data.data;
         if (tmpData) {
           const allCategories = transformCategoryList(tmpData.categories || []);
@@ -54,9 +56,14 @@ const CategoriesPage: React.FC = () => {
           setPage(1);
           setError("No categories found");
         }
-      })
-      .catch(() => setError("Failed to fetch categories"))
-      .finally(() => setLoading(false));
+      } catch (err) {
+        setError("Failed to fetch categories");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
   }, [page, navigate]);
 
   const handleStatusToggle = (id: string) => {

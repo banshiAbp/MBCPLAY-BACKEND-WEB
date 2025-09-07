@@ -1,29 +1,54 @@
-import React, { useState, ReactElement } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
-import Login from "./pages/Login";
+import React, { useState, ReactElement, useEffect } from "react";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { initializeAuth } from "./store/authSlice";
+import { loadAuthFromStorage } from "./utils/authPersistence";
+import AppRoutes from "./routes";
 import Navbar from "./layouts/Navbar";
-import Dashboard from "./pages/Dashboard";
-import CategoriesPage from "./pages/media-management/categories/Categories";
-import ManageCategories from "./pages/media-management/categories/ManageCategories";
-import Genres from "./pages/media-management/genres/Genres";
-import ManageGenres from "./pages/media-management/genres/ManageGenres";
-import Languages from "./pages/media-management/languages/Languages";
-import ManageLanguage from "./pages/media-management/languages/ManageLanguage";
-import "./styles/main.scss";
 import Sidebar from "./layouts/Sidebar";
+import "./styles/main.scss";
 
 const App: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const handleSidebarToggle = () => setSidebarCollapsed((prev) => !prev);
   const location = useLocation();
   const isLogin = location.pathname === "/login";
-  const token = localStorage.getItem("token");
+  
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+
+  // Initialize auth state from localStorage on app start
+  useEffect(() => {
+    const initializeApp = () => {
+      const storedAuth = loadAuthFromStorage();
+      if (storedAuth) {
+        dispatch(initializeAuth({
+          token: storedAuth.token,
+          user: storedAuth.user
+        }));
+      }
+      setIsInitialized(true);
+    };
+
+    initializeApp();
+  }, [dispatch]);
+
+  // Show loading while initializing auth state
+  if (!isInitialized) {
+    return (
+      <div style={{ 
+        minHeight: "100vh", 
+        background: "#181f29", 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center",
+        color: "white"
+      }}>
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: "100vh", background: "#181f29" }}>
@@ -41,78 +66,7 @@ const App: React.FC = () => {
           />
         )}
         <main style={{ flex: 1, overflow: "auto", background: "#181f29" }}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                token ? (
-                  <Navigate to="/dashboard" replace />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                !token ? <Login /> : <Navigate to="/dashboard" replace />
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={token ? <Dashboard /> : <Navigate to="/login" replace />}
-            />
-            <Route
-              path="/media-management/categories"
-              element={
-                token ? <CategoriesPage /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/media-management/categories/manage-categories"
-              element={
-                token ? <ManageCategories /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/media-management/categories/edit/:id"
-              element={
-                token ? <ManageCategories /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/media-management/genres"
-              element={token ? <Genres /> : <Navigate to="/login" replace />}
-            />
-            <Route
-              path="/media-management/genres/manage-genres"
-              element={
-                token ? <ManageGenres /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/media-management/genres/manage-genres/:id"
-              element={
-                token ? <ManageGenres /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/media-management/languages"
-              element={token ? <Languages /> : <Navigate to="/login" replace />}
-            />
-            <Route
-              path="/media-management/languages/manage"
-              element={
-                token ? <ManageLanguage /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/media-management/languages/manage/:id"
-              element={
-                token ? <ManageLanguage /> : <Navigate to="/login" replace />
-              }
-            />
-          </Routes>
+          <AppRoutes />
         </main>
       </div>
     </div>

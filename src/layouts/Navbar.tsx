@@ -2,6 +2,9 @@ import mbcplayLogo from "../assets/mbcplay-logo.png";
 import { FaUserCircle, FaCog, FaSignOutAlt, FaUser } from "react-icons/fa";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { logout } from "../store/authSlice";
+import { clearAuthFromStorage } from "../utils/authPersistence";
 import avatar from "../assets/avatar.svg";
 
 const Navbar: React.FC<{
@@ -10,9 +13,16 @@ const Navbar: React.FC<{
 }> = ({ sidebarCollapsed, onSidebarToggle }) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // Dispatch logout action to clear Redux state
+    dispatch(logout());
+    
+    // Clear localStorage
+    clearAuthFromStorage();
+    
     navigate("/login");
   };
 
@@ -110,8 +120,8 @@ const Navbar: React.FC<{
             <div className="navbar-profile-header">
               <img src={avatar} alt="Profile" />
               <div>
-                <div className="profile-name">Ivan2 Norris2</div>
-                <div className="profile-email">demo@streamit.com</div>
+                <div className="profile-name">{user?.name || "User"}</div>
+                <div className="profile-email">{user?.email || "user@example.com"}</div>
               </div>
             </div>
             <div className="navbar-profile-actions">

@@ -6,7 +6,6 @@ export async function submitCategory({
   description,
   imageUrl,
   status,
-  token,
   id,
   navigate,
   setSessionExpired,
@@ -15,7 +14,6 @@ export async function submitCategory({
   description: string;
   imageUrl: string;
   status: boolean;
-  token: string | null;
   id?: string;
   navigate?: (path: string, options?: any) => void;
   setSessionExpired?: (msg: string) => void;
@@ -31,7 +29,6 @@ export async function submitCategory({
       method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : "",
       },
       body: JSON.stringify({
         categoryTitle: name,

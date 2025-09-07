@@ -3,12 +3,10 @@ import { fetchWithAuth } from "../../../utils/fetchWithAuth";
 
 export async function getCategoryDetail({
   id,
-  token,
   navigate,
   setSessionExpired,
 }: {
   id: string;
-  token: string | null;
   navigate?: (path: string, options?: any) => void;
   setSessionExpired?: (msg: string) => void;
 }) {
@@ -18,7 +16,6 @@ export async function getCategoryDetail({
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization: token ? `Bearer ${token}` : "",
       },
     },
     navigate,

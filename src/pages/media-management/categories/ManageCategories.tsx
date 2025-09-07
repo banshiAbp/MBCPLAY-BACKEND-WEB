@@ -37,10 +37,8 @@ function ManageCategories() {
       setLoading(true);
       const fetchCategory = async () => {
         try {
-          const token = localStorage.getItem("token");
           const { data } = await getCategoryDetail({
             id,
-            token,
             navigate,
             setSessionExpired,
           });
@@ -66,11 +64,9 @@ function ManageCategories() {
       const file = e.target.files[0];
       setUploading(true);
       setUploadProgress(0);
-      const token = localStorage.getItem("token");
       try {
         const result = await uploadCategoryImage({
           file,
-          token,
           onProgress: (progress) => setUploadProgress(progress),
           navigate,
           setSessionExpired,
@@ -104,13 +100,11 @@ function ManageCategories() {
     }
     setSaving(true);
     try {
-      const token = localStorage.getItem("token");
       const { response, data } = await submitCategory({
         name,
         description,
         imageUrl,
         status,
-        token,
         ...(id ? { id } : {}),
       });
       if (response.ok) {

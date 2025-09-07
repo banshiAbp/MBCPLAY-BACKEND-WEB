@@ -1,20 +1,25 @@
 import API_BASE_URL from "../../../config/api";
 import { UploadCategoryImageResponse } from "../../../interfaces/media-management/category/uploadCategoryImageResponse";
+import { store } from "../../../store/store";
+import { logout } from "../../../store/authSlice";
+import { clearAuthFromStorage } from "../../../utils/authPersistence";
 
 export function uploadCategoryImage({
   file,
-  token,
   onProgress,
   navigate,
   setSessionExpired,
 }: {
   file: File;
-  token: string | null;
   onProgress?: (progress: number) => void;
   navigate?: (path: string, options?: any) => void;
   setSessionExpired?: (msg: string) => void;
 }): Promise<UploadCategoryImageResponse> {
   return new Promise((resolve, reject) => {
+    // Get token from Redux store
+    const state = store.getState();
+    const token = state.auth.token;
+    
     const formData = new FormData();
     formData.append("file", file);
     const xhr = new XMLHttpRequest();
@@ -27,7 +32,12 @@ export function uploadCategoryImage({
     };
     xhr.onload = () => {
       if (xhr.status === 401) {
-        localStorage.removeItem("token");
+        // Dispatch logout action to clear Redux state
+        store.dispatch(logout());
+        
+        // Clear localStorage
+        clearAuthFromStorage();
+        
         if (setSessionExpired)
           setSessionExpired("Session expired! Please do login again.");
         if (navigate) navigate("/login", { replace: true });
