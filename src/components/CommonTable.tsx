@@ -1,7 +1,7 @@
 import React from "react";
 import Pagination from "./Pagination";
 import ToggleSwitch from "./ToggleSwitch";
-import DetailsPopup from "./DetailsPopup";
+import Popover from "./Popover";
 import "../styles/components/common-table.scss";
 
 export interface TableColumn {
@@ -56,8 +56,8 @@ const CommonTable: React.FC<CommonTableProps> = ({
       return column.render(value, row);
     }
 
-    // Special handling for status column
-    if (column.key === "status" && typeof value === "boolean" && onStatusToggle) {
+    // Special handling for status column (supports different naming patterns)
+    if ((column.key === "status" || column.key.endsWith("Status")) && typeof value === "boolean" && onStatusToggle) {
       const id = row.id || row.languageId || row.genreId || row.categoryId;
       return (
         <ToggleSwitch
@@ -67,8 +67,8 @@ const CommonTable: React.FC<CommonTableProps> = ({
       );
     }
 
-    // Special handling for description column with truncation
-    if (column.key === "description" && typeof value === "string") {
+    // Special handling for description column with truncation (supports different naming patterns)
+    if ((column.key === "description" || column.key.endsWith("Description")) && typeof value === "string") {
       const desc = value || "";
       return desc.length > 20 ? (
         <>
@@ -83,6 +83,24 @@ const CommonTable: React.FC<CommonTableProps> = ({
       ) : (
         desc
       );
+    }
+
+    // Special handling for icon columns
+    if (column.key === "icon" || column.key === "iconUrl" || column.key.endsWith("Icon")) {
+      return value ? (
+        <img
+          src={value}
+          alt="icon"
+          className="common-table-icon-img"
+          style={{
+            width: "32px",
+            height: "32px",
+            borderRadius: "6px",
+            backgroundColor: "var(--bs-header-bg)",
+            objectFit: "cover"
+          }}
+        />
+      ) : null;
     }
 
     // Special handling for action column
@@ -123,11 +141,18 @@ const CommonTable: React.FC<CommonTableProps> = ({
       <table className="common-table">
         <thead>
           <tr>
-            {columns.map((column) => (
-              <th key={column.key} className={column.className}>
-                {column.label}
-              </th>
-            ))}
+            {columns.map((column) => {
+              const isIconColumn = column.key === "icon" || column.key === "iconUrl" || column.key.endsWith("Icon");
+              const headerClassName = isIconColumn 
+                ? `${column.className || ""} common-table-icon-cell`.trim()
+                : column.className;
+              
+              return (
+                <th key={column.key} className={headerClassName}>
+                  {column.label}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
@@ -142,11 +167,18 @@ const CommonTable: React.FC<CommonTableProps> = ({
               const id = row.id || row.languageId || row.genreId || row.categoryId;
               return (
                 <tr key={id || index}>
-                {columns.map((column) => (
-                  <td key={column.key} className={column.className}>
-                    {renderCellContent(column, row)}
-                  </td>
-                ))}
+                {columns.map((column) => {
+                  const isIconColumn = column.key === "icon" || column.key === "iconUrl" || column.key.endsWith("Icon");
+                  const cellClassName = isIconColumn 
+                    ? `${column.className || ""} common-table-icon-cell`.trim()
+                    : column.className;
+                  
+                  return (
+                    <td key={column.key} className={cellClassName}>
+                      {renderCellContent(column, row)}
+                    </td>
+                  );
+                })}
               </tr>
               );
             })
@@ -154,12 +186,14 @@ const CommonTable: React.FC<CommonTableProps> = ({
         </tbody>
       </table>
 
-      <DetailsPopup
-        open={descModal.open}
-        title="Description"
-        details={descModal.text}
+      <Popover
+        isOpen={descModal.open}
         onClose={() => setDescModal({ open: false, text: "" })}
-      />
+        className="description-popover"
+      >
+        <h3 className="popover-title">Description</h3>
+        <div className="popover-content">{descModal.text}</div>
+      </Popover>
 
       {data.length > 0 && (
         <Pagination

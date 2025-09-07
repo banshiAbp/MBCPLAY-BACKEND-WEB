@@ -4,60 +4,28 @@ import { PAGE_SIZE } from "../../../config/globalVariable";
 import API_BASE_URL from "../../../config/api";
 import { fetchWithAuth } from "../../../utils/fetchWithAuth";
 import Breadcrumb from "../../../components/Breadcrumb";
+import HeaderToolbar from "../../../components/HeaderToolbar";
 import ToggleSwitch from "../../../components/ToggleSwitch";
-import Checkbox from "../../../components/Checkbox";
+import StatusMessage from "../../../components/StatusMessage";
 import CommonTable, { TableColumn } from "../../../components/CommonTable";
 import "../../../styles/media-management/categories.scss";
 import { Category } from "../../../interfaces/media-management/category/categoryType";
 import { transformCategoryList } from "../../../interfaces/media-management/category/categoryTransform";
-import { FaFilter, FaFileExport } from "react-icons/fa";
-import { FaCirclePlus } from "react-icons/fa6";
 
 const CategoriesPage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const navigate = useNavigate();
 
   // Define table columns
   const columns: TableColumn[] = [
-    {
-      key: "checkbox",
-      label: "",
-      render: (_, row) => (
-        <Checkbox
-          checked={selectedIds.includes(row.id)}
-          onChange={(checked) => {
-            setSelectedIds((prev) =>
-              checked
-                ? [...prev, row.id]
-                : prev.filter((id) => id !== row.id)
-            );
-          }}
-        />
-      ),
-      className: "categories-table-checkbox"
-    },
     { key: "title", label: "Title", className: "categories-table-title" },
     { key: "description", label: "Description", className: "categories-table-description" },
     { key: "status", label: "Status", className: "categories-table-status" },
-    {
-      key: "icon",
-      label: "Icon",
-      render: (value) => (
-        value ? (
-          <img
-            src={value}
-            alt="icon"
-            className="categories-table-icon-img"
-          />
-        ) : null
-      ),
-      className: "categories-table-icon"
-    },
+    { key: "iconUrl", label: "Icon", className: "categories-table-icon" },
     { key: "action", label: "Operation", className: "categories-table-operation" },
   ];
 
@@ -112,7 +80,6 @@ const CategoriesPage: React.FC = () => {
 
   return (
     <div className="categories-page">
-      {/* Breadcrumb */}
       <Breadcrumb
         items={[
           { label: "Dashboard", path: "/dashboard" },
@@ -120,50 +87,23 @@ const CategoriesPage: React.FC = () => {
           { label: "Categories" },
         ]}
       />
-
-      {/* Action/Filter Row */}
-      <div className="categories-action-row">
-        <select className="categories-action-select">
-          <option>Action</option>
-          <option>Delete</option>
-          <option>Export</option>
-        </select>
-        <button className="categories-apply-btn">Apply</button>
-        <button className="categories-export-btn">
-          <span className="categories-btn-icon">
-            <FaFileExport />
-          </span>
-          Export
-        </button>
-        <div className="categories-action-spacer" />
-        <select className="categories-filter-select">
-          <option>All</option>
-          <option>Enabled</option>
-          <option>Disabled</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Search..."
-          className="categories-search-input"
+      <h2 className="categories-title">Categories</h2>
+      <HeaderToolbar
+        showSearchBox={true}
+        showAddNewButton={true}
+        showSearchTypeDropdown={true}
+        searchPlaceholder="Search Category..."
+        addNewLabel="New"
+        onSearch={() => {}}
+        onAddNew={() => navigate("/media-management/categories/manage-categories")}
+      />
+      {error && (
+        <StatusMessage
+          type="error"
+          message={error}
+          onClose={() => setError(null)}
         />
-        <button className="categories-advanced-filter-btn">
-          <span className="categories-btn-icon">
-            <FaFilter />
-          </span>
-          Advanced Filter
-        </button>
-        <button
-          className="categories-new-btn"
-          onClick={() =>
-            navigate("/media-management/categories/manage-categories")
-          }
-        >
-          <span className="categories-btn-icon">
-            <FaCirclePlus />
-          </span>
-          New
-        </button>
-      </div>
+      )}
 
       <CommonTable
         columns={columns}
@@ -176,7 +116,7 @@ const CategoriesPage: React.FC = () => {
         onStatusToggle={handleStatusToggle}
         onEdit={handleEdit}
         noDataMessage="No categories found."
-        className="categories-table-container"
+        className="categories-table-wrapper"
       />
     </div>
   );

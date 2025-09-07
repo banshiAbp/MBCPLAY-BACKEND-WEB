@@ -5,6 +5,7 @@
 @use "./media-management/maturity-ratings.scss";
 @use "./media-management/manage-maturity-ratings.scss";
 @use "./components/common-table.scss";
+@use "./components/popover.scss";
 body {
   font-family: "Roboto", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";

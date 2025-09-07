@@ -2,7 +2,7 @@
 
 .languages-page {
   padding: 24px;
-  background: var(--bs-page-bg);
+  background: var(--bs-secondary-bg);
   min-height: 100vh;
 
   .languages-title {
@@ -13,11 +13,11 @@
   }
 
   .languages-table-wrapper {
-    background: var(--bs-secondary-bg);
+    background: var(--bs-card-bg);
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 2px 8px var(--bs-shadow-light);
-    margin-bottom: 32px;
+    // margin-bottom handled by common-table-wrapper
   }
 
   .languages-table {

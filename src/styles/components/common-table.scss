@@ -4,6 +4,7 @@
   border-radius: 8px;
   overflow: hidden;
   margin-top: 20px;
+  margin-bottom: 32px;
 
   .common-table {
     width: 100%;
@@ -77,6 +78,22 @@
     &:hover {
       background: var(--bs-brand-primary-hover);
     }
+  }
+
+  .common-table-icon-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--bs-header-bg);
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+  }
+
+  // Center align icon columns
+  .common-table th.common-table-icon-cell,
+  .common-table tbody tr td.common-table-icon-cell {
+    text-align: center;
   }
 
   .common-table-loading {

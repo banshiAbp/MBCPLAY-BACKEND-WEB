@@ -2,8 +2,15 @@
 
 .categories-page {
   padding: 24px;
-  background: var(--bs-page-bg);
+  background: var(--bs-secondary-bg);
   min-height: 100vh;
+
+  .categories-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 20px 0;
+    color: var(--bs-text-primary);
+  }
 
   .categories-action-row {
     display: flex;
@@ -79,10 +86,11 @@
   }
 
   .categories-table-container {
-    background: var(--bs-secondary-bg);
+    background: var(--bs-card-bg);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 8px var(--bs-shadow-light);
+    padding: 24px;
 
     .categories-table {
       width: 100%;
