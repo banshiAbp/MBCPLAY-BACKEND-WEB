@@ -1,9 +1,9 @@
-$popup-bg: #fff;
+$popup-bg: var(--bs-popup-bg);
 $popup-overlay: rgba(0, 0, 0, 0.5);
-$popup-title: #222;
-$popup-content: #333;
-$popup-close-bg: #e53935;
-$popup-close-color: #fff;
+$popup-title: var(--bs-text-dark);
+$popup-content: var(--bs-text-content);
+$popup-close-bg: var(--bs-checkbox-checked);
+$popup-close-color: var(--bs-white);
 
 .details-popup-overlay {
   position: fixed;
@@ -24,7 +24,7 @@ $popup-close-color: #fff;
   border-radius: 8px;
   min-width: 300px;
   max-width: 90vw;
-  box-shadow: 0 2px 16px #0003;
+  box-shadow: 0 2px 16px var(--bs-shadow-medium);
   opacity: 0;
   transform: translateY(40px) scale(0.98);
   animation: details-popup-fade-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;

@@ -1,9 +1,9 @@
-$pagination-bg: #353a3f;
-$pagination-bg-hover: #232b36;
-$pagination-bg-active: #49525a;
-$pagination-ellipsis-bg: #232b36;
-$pagination-color: #fff;
-$pagination-ellipsis-color: #888;
+$pagination-bg: var(--bs-pagination-bg);
+$pagination-bg-hover: var(--bs-pagination-hover-bg);
+$pagination-bg-active: var(--bs-pagination-active-bg);
+$pagination-ellipsis-bg: var(--bs-pagination-ellipsis-bg);
+$pagination-color: var(--bs-text-primary);
+$pagination-ellipsis-color: var(--bs-text-ellipsis);
 
 .common-pagination {
   display: flex;

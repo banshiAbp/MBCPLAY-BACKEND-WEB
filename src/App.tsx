@@ -39,11 +39,11 @@ const App: React.FC = () => {
     return (
       <div style={{ 
         minHeight: "100vh", 
-        background: "#181f29", 
+        background: "var(--bs-secondary-bg)", 
         display: "flex", 
         alignItems: "center", 
         justifyContent: "center",
-        color: "white"
+        color: "var(--bs-text-primary)"
       }}>
         Loading...
       </div>
@@ -51,7 +51,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#181f29" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bs-secondary-bg)" }}>
       {!isLogin && (
         <Navbar
           sidebarCollapsed={sidebarCollapsed}
@@ -65,7 +65,7 @@ const App: React.FC = () => {
             onCollapseChange={setSidebarCollapsed}
           />
         )}
-        <main style={{ flex: 1, overflow: "auto", background: "#181f29" }}>
+        <main style={{ flex: 1, overflow: "auto", background: "var(--bs-secondary-bg)" }}>
           <AppRoutes />
         </main>
       </div>

@@ -15,17 +15,17 @@ const FileUploadProgress: React.FC<FileUploadProgressProps> = ({
       <div
         style={{
           height: 8,
-          background: "#222",
+          background: "var(--bs-text-dark)",
           borderRadius: 4,
           overflow: "hidden",
-          boxShadow: "0 1px 2px #0001",
+          boxShadow: "0 1px 2px var(--bs-shadow-input)",
         }}
       >
         <div
           style={{
             width: `${progress}%`,
             height: "100%",
-            background: "#389e3d",
+            background: "var(--bs-text-success)",
             transition: "width 0.2s",
           }}
         />
@@ -33,7 +33,7 @@ const FileUploadProgress: React.FC<FileUploadProgressProps> = ({
       <div
         style={{
           fontSize: 12,
-          color: "#389e3d",
+          color: "var(--bs-text-success)",
           marginTop: 2,
           textAlign: "right",
         }}

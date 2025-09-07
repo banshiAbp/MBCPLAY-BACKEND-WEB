@@ -22,14 +22,17 @@ const Sidebar = ({
     <aside
       className={`sidebar ${
         collapsed ? "collapsed" : ""
-      } bg-[#181f29] text-white min-h-screen flex flex-col border-r border-[#232b36] transition-all duration-200`}
-      style={{
+      } min-h-screen flex flex-col transition-all duration-200`}
+      style={{ 
+        backgroundColor: "var(--bs-secondary-bg)", 
+        color: "var(--bs-text-primary)", 
+        borderRight: "1px solid var(--bs-border-color)",
         width: collapsed ? "4rem" : "16rem",
         zIndex: 10,
         position: "relative",
       }}
     >
-      <div className="relative flex flex-col items-center pt-6 pb-2 border-b border-[#232b36]">
+      <div className="relative flex flex-col items-center pt-6 pb-2" style={{ borderBottom: "1px solid var(--bs-border-color)" }}>
         {/* Sidebar toggle button moved to Navbar */}
       </div>
       <nav className="flex-1 p-4 overflow-y-auto">
@@ -59,7 +62,7 @@ const Sidebar = ({
                       <>
                         <button
                           onClick={() => toggleSubmenu(submenuKey)}
-                          className={`w-full flex items-center gap-3 px-3 py-2 rounded hover:bg-[#232b36] hover:text-[#ff7e31] focus:outline-none ${
+                          className={`w-full flex items-center gap-3 px-3 py-2 rounded focus:outline-none ${
                             collapsed ? "justify-center" : ""
                           }`}
                           style={
@@ -103,7 +106,7 @@ const Sidebar = ({
                                   style={{
                                     fontWeight: 700,
                                     fontSize: "1.1rem",
-                                    color: "#9ca3af",
+                                    color: "var(--bs-text-muted)",
                                     letterSpacing: "0.05em",
                                   }}
                                 >
@@ -146,7 +149,7 @@ const Sidebar = ({
                     ) : (
                       <Link
                         to={menu.to}
-                        className={`flex items-center gap-3 px-3 py-2 rounded hover:bg-[#232b36] hover:text-[#ff7e31] ${
+                        className={`flex items-center gap-3 px-3 py-2 rounded ${
                           collapsed ? "justify-center" : ""
                         }`}
                       >

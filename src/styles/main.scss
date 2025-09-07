@@ -2,6 +2,8 @@
 @use "./sidebar.scss";
 @use "./navbar.scss";
 @use "./navbar-profile.scss";
+@use "./media-management/maturity-ratings.scss";
+@use "./media-management/manage-maturity-ratings.scss";
 body {
   font-family: "Roboto", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";

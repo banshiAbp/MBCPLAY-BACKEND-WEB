@@ -14,8 +14,8 @@
 .loader-spinner {
   width: 60px;
   height: 60px;
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #ff7e31;
+  border: 6px solid var(--bs-loader-bg);
+  border-top: 6px solid var(--bs-loader-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

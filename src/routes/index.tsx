@@ -9,6 +9,8 @@ import Genres from "../pages/media-management/genres/Genres";
 import ManageGenres from "../pages/media-management/genres/ManageGenres";
 import Languages from "../pages/media-management/languages/Languages";
 import ManageLanguage from "../pages/media-management/languages/ManageLanguage";
+import MaturityRatings from "../pages/media-management/maturity-ratings/MaturityRatings";
+import ManageMaturityRating from "../pages/media-management/maturity-ratings/ManageMaturityRating";
 
 // Main routes configuration
 const AppRoutes: React.FC = () => {
@@ -76,6 +78,20 @@ const AppRoutes: React.FC = () => {
       <Route
         path="/media-management/languages/manage/:id"
         element={isAuthenticated ? <ManageLanguage /> : <Navigate to="/login" replace />}
+      />
+
+      {/* Maturity Ratings routes */}
+      <Route
+        path="/media-management/maturity-ratings"
+        element={isAuthenticated ? <MaturityRatings /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/media-management/maturity-ratings/manage"
+        element={isAuthenticated ? <ManageMaturityRating /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/media-management/maturity-ratings/manage/:id"
+        element={isAuthenticated ? <ManageMaturityRating /> : <Navigate to="/login" replace />}
       />
 
       {/* Future routes can be added here */}

@@ -12,7 +12,7 @@
     font-weight: 600;
     transition: color 0.2s;
     &:hover {
-      color: #ff7e31;
+      color: var(--bs-brand-primary);
     }
   }
   .categories-form-card {
@@ -20,7 +20,7 @@
     border-radius: 12px;
     padding: 32px 24px 24px 24px;
     margin-bottom: 32px;
-    box-shadow: 0 2px 8px #0002;
+    box-shadow: 0 2px 8px var(--bs-shadow-light);
     .categories-form-row {
       display: flex;
       gap: 32px;

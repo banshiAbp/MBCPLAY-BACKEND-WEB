@@ -57,7 +57,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         )}
         {imageUploadError &&
           imageUploadError !== "Image uploaded successfully" && (
-            <div style={{ color: "#ff4d4f", fontSize: 14, marginTop: 4 }}>
+            <div style={{ color: "var(--bs-text-error)", fontSize: 14, marginTop: 4 }}>
               {imageUploadError}
             </div>
           )}

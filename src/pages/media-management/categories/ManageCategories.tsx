@@ -197,7 +197,7 @@ function ManageCategories() {
                 placeholder="Action"
               />
               {titleError && (
-                <div style={{ color: "#ff4d4f", fontSize: 14, marginTop: 4 }}>
+                <div style={{ color: "var(--bs-text-error)", fontSize: 14, marginTop: 4 }}>
                   {titleError}
                 </div>
               )}

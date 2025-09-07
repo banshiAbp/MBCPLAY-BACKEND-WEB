@@ -14,8 +14,8 @@
     height: 22px;
     min-width: 22px;
     min-height: 22px;
-    background: #181f29;
-    border: 2px solid #ccc;
+    background: var(--bs-checkbox-bg);
+    border: 2px solid var(--bs-border-checkbox);
     border-radius: 4px;
     display: inline-block;
     box-sizing: border-box;
@@ -29,26 +29,26 @@
       top: 50%;
       width: 7px;
       height: 12px;
-      border: solid #fff;
+      border: solid var(--bs-white);
       border-width: 0 3px 3px 0;
       transform: translate(-50%, -60%) rotate(45deg);
       pointer-events: none;
     }
   }
   input[type="checkbox"]:checked + .custom-checkbox-box {
-    background: #e53935;
-    border-color: #e53935;
+    background: var(--bs-checkbox-checked);
+    border-color: var(--bs-checkbox-checked);
   }
   input[type="checkbox"]:checked + .custom-checkbox-box::after {
     display: block;
   }
   input[type="checkbox"]:focus + .custom-checkbox-box {
-    box-shadow: 0 0 0 2px #e5393533;
+    box-shadow: 0 0 0 2px var(--bs-shadow-focus);
   }
   input[type="checkbox"]:disabled + .custom-checkbox-box {
     opacity: 0.5;
-    border-color: #444;
-    background: #232b30;
+    border-color: var(--bs-border-checkbox-checked);
+    background: var(--bs-card-bg);
     cursor: not-allowed;
   }
 }

@@ -27,7 +27,7 @@ const Navbar: React.FC<{
   };
 
   return (
-    <nav className="navbar custom-navbar bg-[#232b36] px-6 py-2 flex items-center justify-between border-b border-[#232b36] fixed top-0 left-0 right-0 z-40 w-full">
+    <nav className="navbar custom-navbar px-6 py-2 flex items-center justify-between fixed top-0 left-0 right-0 z-40 w-full" style={{ backgroundColor: "var(--bs-header-bg)", borderBottom: "1px solid var(--bs-header-bg)" }}>
       {/* Left: Logo/Brand */}
       <div className="navbar-brand-row">
         {!sidebarCollapsed && (
@@ -56,7 +56,7 @@ const Navbar: React.FC<{
               xmlns="http://www.w3.org/2000/svg"
               className="sidebar-toggle-icon"
             >
-              <circle cx="12.5" cy="12.5" r="10" fill="#ff7e31" />
+              <circle cx="12.5" cy="12.5" r="10" fill="var(--bs-brand-primary)" />
               <path
                 d="M16 12.5H9"
                 stroke="white"
@@ -81,7 +81,7 @@ const Navbar: React.FC<{
               xmlns="http://www.w3.org/2000/svg"
               className="sidebar-toggle-icon"
             >
-              <circle cx="12.5" cy="12.5" r="10" fill="#ff7e31" />
+              <circle cx="12.5" cy="12.5" r="10" fill="var(--bs-brand-primary)" />
               <path
                 d="M9 12.5H16"
                 stroke="white"

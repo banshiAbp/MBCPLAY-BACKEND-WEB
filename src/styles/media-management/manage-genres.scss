@@ -16,7 +16,7 @@
     font-weight: 600;
     transition: color 0.2s;
     &:hover {
-      color: #ff7e31;
+      color: var(--bs-brand-primary);
     }
   }
   .manage-genres-form-card {
@@ -24,7 +24,7 @@
     border-radius: 12px;
     padding: 32px 24px 24px 24px;
     margin-bottom: 32px;
-    box-shadow: 0 2px 8px #0002;
+    box-shadow: 0 2px 8px var(--bs-shadow-light);
     .manage-genres-form-row {
       display: flex;
       gap: 32px;
@@ -73,10 +73,10 @@
         cursor: pointer;
         transition: background 0.2s;
         &:hover {
-          background: #ff7e31;
+          background: var(--bs-brand-primary);
         }
         &:disabled {
-          background: #aaa;
+          background: var(--bs-text-muted);
           cursor: not-allowed;
         }
       }

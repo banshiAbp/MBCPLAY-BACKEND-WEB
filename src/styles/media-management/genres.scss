@@ -16,7 +16,7 @@
     background: var(--bs-secondary-bg);
     border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 2px 8px #0002;
+    box-shadow: 0 2px 8px var(--bs-shadow-light);
     margin-bottom: 32px;
   }
 
@@ -37,11 +37,11 @@
     }
     tr {
       background: var(--bs-secondary-bg);
-      border-bottom: 1px solid #222;
+      border-bottom: 1px solid var(--bs-text-dark);
     }
     .no-data {
       text-align: center;
-      color: #aaa;
+      color: var(--bs-text-muted);
       font-style: italic;
     }
     .edit-btn {
@@ -54,7 +54,7 @@
       cursor: pointer;
       transition: background 0.2s;
       &:hover {
-        background: #ff7e31;
+        background: var(--bs-brand-primary);
       }
     }
   }
