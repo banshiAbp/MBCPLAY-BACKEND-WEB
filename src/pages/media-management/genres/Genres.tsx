@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getGenreList } from "../../../services/media-management/genres/getGenreList";
 import { Genre } from "../../../interfaces/media-management/genre/genreType";
-import { FaFilter, FaFileExport } from "react-icons/fa";
-import { FaCirclePlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import HeaderToolbar from "../../../components/HeaderToolbar";
 import { transformGenreList } from "../../../interfaces/media-management/genre/genreTransform";
 import Breadcrumb from "../../../components/Breadcrumb";
 import Pagination from "../../../components/Pagination";
@@ -60,47 +59,15 @@ const Genres: React.FC = () => {
         ]}
       />
       <h2 className="genres-title">Genres</h2>
-      {/* Action/Filter Row */}
-      <div className="genres-action-row">
-        <select className="genres-action-select">
-          <option>Action</option>
-          <option>Delete</option>
-          <option>Export</option>
-        </select>
-        <button className="genres-apply-btn">Apply</button>
-        <button className="genres-export-btn">
-          <span className="genres-btn-icon">
-            <FaFileExport />
-          </span>
-          Export
-        </button>
-        <div className="genres-action-spacer" />
-        <select className="genres-filter-select">
-          <option>All</option>
-          <option>Enabled</option>
-          <option>Disabled</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Search..."
-          className="genres-search-input"
-        />
-        <button className="genres-advanced-filter-btn">
-          <span className="genres-btn-icon">
-            <FaFilter />
-          </span>
-          Advanced Filter
-        </button>
-        <button
-          className="genres-new-btn"
-          onClick={() => navigate("/media-management/genres/manage-genres")}
-        >
-          <span className="genres-btn-icon">
-            <FaCirclePlus />
-          </span>
-          New
-        </button>
-      </div>
+      <HeaderToolbar
+        showSearchBox={true}
+        showAddNewButton={true}
+        showSearchTypeDropdown={true}
+        searchPlaceholder="Search..."
+        addNewLabel="New"
+        onSearch={() => {}}
+        onAddNew={() => navigate("/media-management/genres/manage-genres")}
+      />
       {error && (
         <StatusMessage
           type="error"
