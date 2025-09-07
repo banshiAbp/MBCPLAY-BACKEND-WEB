@@ -1,0 +1,61 @@
+@use "../variable.scss";
+
+.genres-page {
+  padding: 24px;
+  background: var(--bs-page-bg);
+  min-height: 100vh;
+
+  .genres-title {
+    color: var(--bs-white);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+
+  .genres-table-wrapper {
+    background: var(--bs-secondary-bg);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px #0002;
+    margin-bottom: 32px;
+  }
+
+  .genres-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+
+    th,
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      color: var(--bs-white);
+    }
+    th {
+      background: var(--bs-header-bg);
+      font-weight: 600;
+    }
+    tr {
+      background: var(--bs-secondary-bg);
+      border-bottom: 1px solid #222;
+    }
+    .no-data {
+      text-align: center;
+      color: #aaa;
+      font-style: italic;
+    }
+    .edit-btn {
+      background: var(--bs-primary-orange);
+      color: var(--bs-white);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      &:hover {
+        background: #ff7e31;
+      }
+    }
+  }
+}

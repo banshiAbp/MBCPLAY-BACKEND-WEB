@@ -11,6 +11,8 @@ import Navbar from "./layouts/Navbar";
 import Dashboard from "./pages/Dashboard";
 import CategoriesPage from "./pages/media-management/categories/Categories";
 import ManageCategories from "./pages/media-management/categories/ManageCategories";
+import Genres from "./pages/media-management/genres/Genres";
+import ManageGenres from "./pages/media-management/genres/ManageGenres";
 import "./styles/main.scss";
 import Sidebar from "./layouts/Sidebar";
 
@@ -74,6 +76,22 @@ const App: React.FC = () => {
               path="/media-management/categories/edit/:id"
               element={
                 token ? <ManageCategories /> : <Navigate to="/login" replace />
+              }
+            />
+            <Route
+              path="/media-management/genres"
+              element={token ? <Genres /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/media-management/genres/manage-genres"
+              element={
+                token ? <ManageGenres /> : <Navigate to="/login" replace />
+              }
+            />
+            <Route
+              path="/media-management/genres/manage-genres/:id"
+              element={
+                token ? <ManageGenres /> : <Navigate to="/login" replace />
               }
             />
             {/* Additional routes can be added here */}

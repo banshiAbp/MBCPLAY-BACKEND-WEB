@@ -1,0 +1,85 @@
+@use "../variable.scss";
+
+.manage-genres-page {
+  padding: 24px;
+  background: var(--bs-page-bg);
+  min-height: 100vh;
+
+  .manage-genres-back-row {
+    margin-bottom: 24px;
+  }
+  .manage-genres-back-btn {
+    color: var(--bs-primary-red);
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 8px;
+    font-weight: 600;
+    transition: color 0.2s;
+    &:hover {
+      color: #ff7e31;
+    }
+  }
+  .manage-genres-form-card {
+    background: var(--bs-secondary-bg);
+    border-radius: 12px;
+    padding: 32px 24px 24px 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 8px #0002;
+    .manage-genres-form-row {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 24px;
+      .manage-genres-form-col {
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        min-width: 220px;
+        .manage-genres-form-label {
+          color: var(--bs-white);
+          font-weight: 600;
+          margin-bottom: 8px;
+        }
+        .manage-genres-form-input {
+          background: var(--bs-header-bg);
+          color: var(--bs-white);
+          border: none;
+          border-radius: 6px;
+          font-size: 15px;
+          padding: 8px 16px;
+          margin-bottom: 8px;
+        }
+        .manage-genres-form-textarea {
+          background: var(--bs-header-bg);
+          color: var(--bs-white);
+          border: none;
+          border-radius: 6px;
+          font-size: 15px;
+          padding: 8px 16px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+    .manage-genres-form-footer {
+      display: flex;
+      justify-content: flex-end;
+      .manage-genres-form-save-btn {
+        background: var(--bs-primary-orange);
+        color: var(--bs-white);
+        border: none;
+        border-radius: 6px;
+        padding: 10px 32px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.2s;
+        &:hover {
+          background: #ff7e31;
+        }
+        &:disabled {
+          background: #aaa;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
