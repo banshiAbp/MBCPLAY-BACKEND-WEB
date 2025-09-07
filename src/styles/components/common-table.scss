@@ -1,0 +1,127 @@
+// Common Table Component Styles
+.common-table-wrapper {
+  background: var(--bs-card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+
+  .common-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      background: var(--bs-table-header-bg);
+
+      tr {
+        th {
+          padding: 16px 12px;
+          text-align: left;
+          font-weight: 600;
+          color: var(--bs-text-primary);
+          border-bottom: 1px solid var(--bs-border-light);
+          font-size: 14px;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid var(--bs-border-light);
+        transition: background-color 0.2s;
+
+        &:hover {
+          background: var(--bs-table-hover-bg);
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        td {
+          padding: 16px 12px;
+          color: var(--bs-text-secondary);
+          font-size: 14px;
+
+          &.common-table-no-data {
+            text-align: center;
+            padding: 40px;
+            color: var(--bs-text-muted);
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+
+  .common-table-description-more {
+    color: var(--bs-brand-primary);
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .common-table-edit-btn {
+    background: var(--bs-brand-primary);
+    color: var(--bs-white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: var(--bs-brand-primary-hover);
+    }
+  }
+
+  .common-table-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: var(--bs-text-muted);
+
+    .common-table-spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--bs-border-light);
+      border-top: 2px solid var(--bs-brand-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 12px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  }
+
+  .common-table-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: var(--bs-text-error);
+    font-weight: 500;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .common-table-wrapper {
+    .common-table {
+      thead tr th,
+      tbody tr td {
+        padding: 12px 8px;
+        font-size: 13px;
+      }
+    }
+  }
+}

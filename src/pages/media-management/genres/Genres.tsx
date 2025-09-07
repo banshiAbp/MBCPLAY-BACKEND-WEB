@@ -5,11 +5,9 @@ import { useNavigate } from "react-router-dom";
 import HeaderToolbar from "../../../components/HeaderToolbar";
 import { transformGenreList } from "../../../interfaces/media-management/genre/genreTransform";
 import Breadcrumb from "../../../components/Breadcrumb";
-import Pagination from "../../../components/Pagination";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
-import ToggleSwitch from "../../../components/ToggleSwitch";
-import DetailsPopup from "../../../components/DetailsPopup";
+import CommonTable, { TableColumn } from "../../../components/CommonTable";
 import "../../../styles/media-management/genres.scss";
 
 const Genres: React.FC = () => {
@@ -18,11 +16,16 @@ const Genres: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [descModal, setDescModal] = useState<{ open: boolean; text: string }>({
-    open: false,
-    text: "",
-  });
   const navigate = useNavigate();
+
+  // Define table columns
+  const columns: TableColumn[] = [
+    { key: "genreTitle", label: "Title" },
+    { key: "genreDescription", label: "Description" },
+    { key: "genreCode", label: "Code" },
+    { key: "genreStatus", label: "Status" },
+    { key: "action", label: "Action" },
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -47,6 +50,17 @@ const Genres: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleStatusToggle = (id: string) => {
+    setGenres((prev) =>
+      prev.map((genre) => (genre.id === id ? { ...genre, genreStatus: !genre.genreStatus } : genre))
+    );
+    // TODO: Implement status update API call
+  };
+
+  const handleEdit = (id: string) => {
+    navigate(`/media-management/genres/manage-genres/${id}`);
   };
 
   return (
@@ -75,88 +89,19 @@ const Genres: React.FC = () => {
           onClose={() => setError(null)}
         />
       )}
-      {loading ? (
-        <Loader visible={true} />
-      ) : (
-        <div className="genres-table-wrapper">
-          <table className="genres-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Code</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {genres.length === 0 ? (
-                <tr>
-                  <td colSpan={3} className="no-data">
-                    No genres found.
-                  </td>
-                </tr>
-              ) : (
-                genres.map((genre) => {
-                  const desc = genre.genreDescription || "";
-                  return (
-                    <tr key={genre.id}>
-                      <td>{genre.genreTitle}</td>
-                      <td>
-                        {desc.length > 20 ? (
-                          <>
-                            {desc.slice(0, 20)}
-                            <span
-                              className="genres-table-description-more"
-                              onClick={() =>
-                                setDescModal({ open: true, text: desc })
-                              }
-                            >
-                              ...
-                            </span>
-                          </>
-                        ) : (
-                          desc
-                        )}
-                      </td>
-                      <td>{genre.genreCode}</td>
-                      <td>
-                        <ToggleSwitch
-                          checked={genre.genreStatus}
-                          onChange={() => {}}
-                        />
-                      </td>
-                      <td>
-                        <button
-                          className="edit-btn"
-                          onClick={() =>
-                            navigate(
-                              `/media-management/genres/manage-genres/${genre.id}`
-                            )
-                          }
-                        >
-                          Edit
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-          <DetailsPopup
-            open={descModal.open}
-            title="Description"
-            details={descModal.text}
-            onClose={() => setDescModal({ open: false, text: "" })}
-          />
-          <Pagination
-            page={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        </div>
-      )}
+      <CommonTable
+        columns={columns}
+        data={genres}
+        loading={loading}
+        error={error}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        onStatusToggle={handleStatusToggle}
+        onEdit={handleEdit}
+        noDataMessage="No genres found."
+        className="genres-table-wrapper"
+      />
     </div>
   );
 };

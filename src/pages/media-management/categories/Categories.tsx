@@ -4,16 +4,14 @@ import { PAGE_SIZE } from "../../../config/globalVariable";
 import API_BASE_URL from "../../../config/api";
 import { fetchWithAuth } from "../../../utils/fetchWithAuth";
 import Breadcrumb from "../../../components/Breadcrumb";
-import Pagination from "../../../components/Pagination";
 import ToggleSwitch from "../../../components/ToggleSwitch";
 import Checkbox from "../../../components/Checkbox";
+import CommonTable, { TableColumn } from "../../../components/CommonTable";
 import "../../../styles/media-management/categories.scss";
 import { Category } from "../../../interfaces/media-management/category/categoryType";
 import { transformCategoryList } from "../../../interfaces/media-management/category/categoryTransform";
 import { FaFilter, FaFileExport } from "react-icons/fa";
 import { FaCirclePlus } from "react-icons/fa6";
-import DetailsPopup from "../../../components/DetailsPopup";
-import "../../../styles/components/details-popup.scss";
 
 const CategoriesPage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -21,12 +19,47 @@ const CategoriesPage: React.FC = () => {
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [descModal, setDescModal] = useState<{ open: boolean; text: string }>({
-    open: false,
-    text: "",
-  });
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const navigate = useNavigate();
+
+  // Define table columns
+  const columns: TableColumn[] = [
+    {
+      key: "checkbox",
+      label: "",
+      render: (_, row) => (
+        <Checkbox
+          checked={selectedIds.includes(row.id)}
+          onChange={(checked) => {
+            setSelectedIds((prev) =>
+              checked
+                ? [...prev, row.id]
+                : prev.filter((id) => id !== row.id)
+            );
+          }}
+        />
+      ),
+      className: "categories-table-checkbox"
+    },
+    { key: "title", label: "Title", className: "categories-table-title" },
+    { key: "description", label: "Description", className: "categories-table-description" },
+    { key: "status", label: "Status", className: "categories-table-status" },
+    {
+      key: "icon",
+      label: "Icon",
+      render: (value) => (
+        value ? (
+          <img
+            src={value}
+            alt="icon"
+            className="categories-table-icon-img"
+          />
+        ) : null
+      ),
+      className: "categories-table-icon"
+    },
+    { key: "action", label: "Operation", className: "categories-table-operation" },
+  ];
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -71,6 +104,10 @@ const CategoriesPage: React.FC = () => {
       prev.map((cat) => (cat.id === id ? { ...cat, status: !cat.status } : cat))
     );
     // TODO: Optionally send status update to backend
+  };
+
+  const handleEdit = (id: string) => {
+    navigate(`/media-management/categories/edit/${id}`);
   };
 
   return (
@@ -128,124 +165,18 @@ const CategoriesPage: React.FC = () => {
         </button>
       </div>
 
-      <div className="categories-table-container">
-        {loading ? (
-          <div className="categories-loading">Loading...</div>
-        ) : error ? (
-          <div className="categories-error">{error}</div>
-        ) : (
-          <table className="categories-table">
-            <thead>
-              <tr className="categories-table-header-row">
-                <th className="categories-table-header-checkbox">
-                  <Checkbox
-                    checked={
-                      categories.length > 0 &&
-                      selectedIds.length === categories.length
-                    }
-                    onChange={(checked) => {
-                      if (checked) {
-                        setSelectedIds(categories.map((cat) => cat.id));
-                      } else {
-                        setSelectedIds([]);
-                      }
-                    }}
-                    disabled={categories.length === 0}
-                  />
-                </th>
-                <th className="categories-table-header-title">Title</th>
-                <th className="categories-table-header-description">
-                  Description
-                </th>
-                <th className="categories-table-header-status">Status</th>
-                <th className="categories-table-header-icon">Icon</th>
-                <th className="categories-table-header-operation">Operation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(Array.isArray(categories) ? categories : []).map((cat) => {
-                const desc = cat.description || "";
-                return (
-                  <tr key={cat.id} className="categories-table-row">
-                    <td className="categories-table-checkbox">
-                      <Checkbox
-                        checked={selectedIds.includes(cat.id)}
-                        onChange={(checked) => {
-                          setSelectedIds((prev) =>
-                            checked
-                              ? [...prev, cat.id]
-                              : prev.filter((id) => id !== cat.id)
-                          );
-                        }}
-                      />
-                    </td>
-                    <td className="categories-table-title">{cat.title}</td>
-                    <td className="categories-table-description">
-                      {desc.length > 20 ? (
-                        <>
-                          {desc.slice(0, 20)}
-                          <span
-                            className="categories-table-description-more"
-                            onClick={() =>
-                              setDescModal({ open: true, text: desc })
-                            }
-                          >
-                            ...
-                          </span>
-                        </>
-                      ) : (
-                        desc
-                      )}
-                    </td>
-                    <td className="categories-table-status">
-                      <ToggleSwitch
-                        checked={cat.status}
-                        onChange={() => handleStatusToggle(cat.id)}
-                      />
-                    </td>
-                    <td className="categories-table-icon">
-                      {cat.iconUrl ? (
-                        <img
-                          src={cat.iconUrl}
-                          alt="icon"
-                          className="categories-table-icon-img"
-                        />
-                      ) : null}
-                    </td>
-                    <td className="categories-table-operation">
-                      <span
-                        className="categories-table-edit-btn"
-                        title="Edit"
-                        onClick={() =>
-                          navigate(
-                            `/media-management/categories/edit/${cat.id}`
-                          )
-                        }
-                      >
-                        ✏️
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-      </div>
-
-      {/* Pagination */}
-      <Pagination
-        page={page}
+      <CommonTable
+        columns={columns}
+        data={categories}
+        loading={loading}
+        error={error}
+        currentPage={page}
         totalPages={totalPages}
         onPageChange={(p) => setPage(Math.max(1, Math.min(totalPages, p)))}
-      />
-
-      {/* Description Modal (Reusable) */}
-      <DetailsPopup
-        open={descModal.open}
-        title="Description"
-        details={descModal.text}
-        onClose={() => setDescModal({ open: false, text: "" })}
+        onStatusToggle={handleStatusToggle}
+        onEdit={handleEdit}
+        noDataMessage="No categories found."
+        className="categories-table-container"
       />
     </div>
   );

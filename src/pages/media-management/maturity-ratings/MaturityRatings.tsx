@@ -5,11 +5,9 @@ import { MaturityRating } from "../../../interfaces/media-management/maturity-ra
 import { transformMaturityRatingList } from "../../../interfaces/media-management/maturity-rating/maturityRatingTransform";
 import HeaderToolbar from "../../../components/HeaderToolbar";
 import Breadcrumb from "../../../components/Breadcrumb";
-import Pagination from "../../../components/Pagination";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
-import ToggleSwitch from "../../../components/ToggleSwitch";
-import DetailsPopup from "../../../components/DetailsPopup";
+import CommonTable, { TableColumn } from "../../../components/CommonTable";
 import "../../../styles/media-management/maturity-ratings.scss";
 
 const MaturityRatings: React.FC = () => {
@@ -18,11 +16,16 @@ const MaturityRatings: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [descModal, setDescModal] = useState<{ open: boolean; text: string }>({
-    open: false,
-    text: "",
-  });
   const navigate = useNavigate();
+
+  // Define table columns
+  const columns: TableColumn[] = [
+    { key: "title", label: "Title" },
+    { key: "description", label: "Description" },
+    { key: "code", label: "Code" },
+    { key: "status", label: "Status" },
+    { key: "action", label: "Action" },
+  ];
 
   useEffect(() => {
     fetchMaturityRatings(currentPage);
@@ -51,6 +54,10 @@ const MaturityRatings: React.FC = () => {
     // TODO: Implement status update API call
   };
 
+  const handleEdit = (id: string) => {
+    navigate(`/media-management/maturity-ratings/manage/${id}`);
+  };
+
   return (
     <div className="maturity-ratings-page">
       <Breadcrumb
@@ -77,88 +84,18 @@ const MaturityRatings: React.FC = () => {
           onClose={() => setError(null)}
         />
       )}
-      {loading ? (
-        <Loader visible={true} />
-      ) : (
-        <div className="maturity-ratings-table-wrapper">
-          <table className="maturity-ratings-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Code</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {maturityRatings.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="no-data">
-                    No maturity ratings found.
-                  </td>
-                </tr>
-              ) : (
-                maturityRatings.map((rating) => {
-                  const desc = rating.description || "";
-                  return (
-                    <tr key={rating.id}>
-                      <td>{rating.title}</td>
-                      <td>
-                        {desc.length > 20 ? (
-                          <>
-                            {desc.slice(0, 20)}
-                            <span
-                              className="maturity-ratings-table-description-more"
-                              onClick={() =>
-                                setDescModal({ open: true, text: desc })
-                              }
-                            >
-                              ...
-                            </span>
-                          </>
-                        ) : (
-                          desc
-                        )}
-                      </td>
-                      <td>{rating.code}</td>
-                      <td>
-                        <ToggleSwitch
-                          checked={rating.status}
-                          onChange={() => handleStatusToggle(rating.id)}
-                        />
-                      </td>
-                      <td>
-                        <button
-                          className="edit-btn"
-                          onClick={() =>
-                            navigate(
-                              `/media-management/maturity-ratings/manage/${rating.id}`
-                            )
-                          }
-                        >
-                          Edit
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-          <DetailsPopup
-            open={descModal.open}
-            title="Description"
-            details={descModal.text}
-            onClose={() => setDescModal({ open: false, text: "" })}
-          />
-          <Pagination
-            page={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        </div>
-      )}
+      <CommonTable
+        columns={columns}
+        data={maturityRatings}
+        loading={loading}
+        error={error}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        onStatusToggle={handleStatusToggle}
+        onEdit={handleEdit}
+        noDataMessage="No maturity ratings found."
+      />
     </div>
   );
 };

@@ -6,9 +6,9 @@ import HeaderToolbar from "../../../components/HeaderToolbar";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
+import CommonTable, { TableColumn } from "../../../components/CommonTable";
 import "../../../styles/media-management/languages.scss";
 import Breadcrumb from "../../../components/Breadcrumb";
-import ToggleSwitch from "../../../components/ToggleSwitch";
 
 const Languages: React.FC = () => {
   const [languages, setLanguages] = useState<LanguageType[]>([]);
@@ -17,6 +17,20 @@ const Languages: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+
+  // Define table columns
+  const columns: TableColumn[] = [
+    { key: "languageTitle", label: "Title" },
+    { 
+      key: "languageFontSample", 
+      label: "Font Sample",
+      render: (value) => (
+        <span style={{ fontFamily: "inherit" }}>{value}</span>
+      )
+    },
+    { key: "languageStatus", label: "Status" },
+    { key: "action", label: "Action" },
+  ];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -42,6 +56,17 @@ const Languages: React.FC = () => {
     }
   };
 
+  const handleStatusToggle = (id: string) => {
+    setLanguages((prev) =>
+      prev.map((lang) => (lang.languageId === id ? { ...lang, languageStatus: !lang.languageStatus } : lang))
+    );
+    // TODO: Implement status update API call
+  };
+
+  const handleEdit = (id: string) => {
+    navigate(`/media-management/languages/manage/${id}`);
+  };
+
   return (
     <div className="languages-page">
       <Breadcrumb
@@ -60,7 +85,6 @@ const Languages: React.FC = () => {
         addNewLabel="Add"
         onAddNew={() => navigate("/media-management/languages/manage")}
       />
-      <Loader visible={loading} />
       {error && (
         <StatusMessage
           type="error"
@@ -68,54 +92,19 @@ const Languages: React.FC = () => {
           onClose={() => setError("")}
         />
       )}
-      <div className="languages-table-wrapper">
-        <table className="languages-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Font Sample</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {languages.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="no-data">
-                  No languages found.
-                </td>
-              </tr>
-            ) : (
-              languages.map((lang) => (
-                <tr key={lang.languageId}>
-                  <td>{lang.languageTitle}</td>
-                  <td style={{ fontFamily: "inherit" }}>
-                    {lang.languageFontSample}
-                  </td>
-                  <td>
-                    <ToggleSwitch
-                      checked={lang.languageStatus}
-                      onChange={() => {}}
-                    />
-                  </td>
-                  <td>
-                    <button
-                      className="edit-btn"
-                      onClick={() =>
-                        navigate(
-                          `/media-management/languages/manage/${lang.languageId}`
-                        )
-                      }
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      <CommonTable
+        columns={columns}
+        data={languages}
+        loading={loading}
+        error={error}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        onStatusToggle={handleStatusToggle}
+        onEdit={handleEdit}
+        noDataMessage="No languages found."
+        className="languages-table-wrapper"
+      />
     </div>
   );
 };
