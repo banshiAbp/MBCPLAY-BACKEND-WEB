@@ -63,7 +63,7 @@ const Genres: React.FC = () => {
         showSearchBox={true}
         showAddNewButton={true}
         showSearchTypeDropdown={true}
-        searchPlaceholder="Search..."
+        searchPlaceholder="Search Genre..."
         addNewLabel="New"
         onSearch={() => {}}
         onAddNew={() => navigate("/media-management/genres/manage-genres")}

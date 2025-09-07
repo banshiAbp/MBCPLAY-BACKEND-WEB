@@ -13,6 +13,8 @@ import CategoriesPage from "./pages/media-management/categories/Categories";
 import ManageCategories from "./pages/media-management/categories/ManageCategories";
 import Genres from "./pages/media-management/genres/Genres";
 import ManageGenres from "./pages/media-management/genres/ManageGenres";
+import Languages from "./pages/media-management/languages/Languages";
+import ManageLanguage from "./pages/media-management/languages/ManageLanguage";
 import "./styles/main.scss";
 import Sidebar from "./layouts/Sidebar";
 
@@ -94,7 +96,22 @@ const App: React.FC = () => {
                 token ? <ManageGenres /> : <Navigate to="/login" replace />
               }
             />
-            {/* Additional routes can be added here */}
+            <Route
+              path="/media-management/languages"
+              element={token ? <Languages /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/media-management/languages/manage"
+              element={
+                token ? <ManageLanguage /> : <Navigate to="/login" replace />
+              }
+            />
+            <Route
+              path="/media-management/languages/manage/:id"
+              element={
+                token ? <ManageLanguage /> : <Navigate to="/login" replace />
+              }
+            />
           </Routes>
         </main>
       </div>
