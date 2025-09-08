@@ -1,0 +1,72 @@
+@use "../variable.scss";
+
+// Advertisements Page Styles
+.advertisements-page {
+  padding: 24px;
+  background: var(--bs-secondary-bg);
+  min-height: 100vh;
+
+  .advertisements-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 20px 0;
+    color: var(--bs-text-primary);
+  }
+
+  // Table wrapper styling handled by CommonTable component
+  .advertisements-table-wrapper {
+    background: var(--bs-card-bg);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px var(--bs-shadow-light);
+    // margin-bottom handled by common-table-wrapper
+  }
+
+  // URL link styling with tooltip
+  .advertisement-url-link {
+    color: var(--bs-brand-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--bs-brand-primary-hover);
+      text-decoration: underline;
+    }
+
+    // Enhanced tooltip styling
+    &[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bs-tooltip-bg);
+      color: var(--bs-text-primary);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 1000;
+      box-shadow: 0 2px 8px var(--bs-shadow-medium);
+      border: 1px solid var(--bs-border-color);
+      max-width: 300px;
+      word-break: break-all;
+      white-space: normal;
+      text-align: center;
+    }
+
+    &[data-tooltip]:hover::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      border: 5px solid transparent;
+      border-top-color: var(--bs-tooltip-bg);
+      z-index: 1000;
+    }
+  }
+}

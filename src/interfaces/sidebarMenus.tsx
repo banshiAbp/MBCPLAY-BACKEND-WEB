@@ -79,7 +79,7 @@ export const leftMenus: SidebarCategory[] = [
           },
           {
             label: "Advertisement",
-            to: "/media-management/advertisement",
+            to: "/media-management/advertisements",
             icon: <FaAd />,
           },
         ],

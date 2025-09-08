@@ -11,6 +11,8 @@ import Languages from "../pages/media-management/languages/Languages";
 import ManageLanguage from "../pages/media-management/languages/ManageLanguage";
 import MaturityRatings from "../pages/media-management/maturity-ratings/MaturityRatings";
 import ManageMaturityRating from "../pages/media-management/maturity-ratings/ManageMaturityRating";
+import Advertisements from "../pages/media-management/advertisements/Advertisements";
+import ManageAdvertisement from "../pages/media-management/advertisements/ManageAdvertisement";
 
 // Main routes configuration
 const AppRoutes: React.FC = () => {
@@ -92,6 +94,20 @@ const AppRoutes: React.FC = () => {
       <Route
         path="/media-management/maturity-ratings/manage/:id"
         element={isAuthenticated ? <ManageMaturityRating /> : <Navigate to="/login" replace />}
+      />
+
+      {/* Advertisement routes */}
+      <Route
+        path="/media-management/advertisements"
+        element={isAuthenticated ? <Advertisements /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/media-management/advertisements/manage-advertisements"
+        element={isAuthenticated ? <ManageAdvertisement /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/media-management/advertisements/manage-advertisements/:id"
+        element={isAuthenticated ? <ManageAdvertisement /> : <Navigate to="/login" replace />}
       />
 
       {/* Future routes can be added here */}
