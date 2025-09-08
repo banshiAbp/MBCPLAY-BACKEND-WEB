@@ -139,18 +139,30 @@
     }
   }
 
-  .sidebar-icon-collapsed {
-    color: var(--bs-text-muted) !important;
-    font-size: 22px !important;
-    width: 22px !important;
-    height: 22px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 auto !important;
-    filter: none !important;
-  }
-}
+         .sidebar-icon-collapsed {
+           color: var(--bs-text-muted) !important;
+           font-size: 22px !important;
+           width: 22px !important;
+           height: 22px !important;
+           display: flex !important;
+           align-items: center !important;
+           justify-content: center !important;
+           margin: 0 auto !important;
+           filter: none !important;
+         }
+       }
+
+       // Active menu item styles
+       .sidebar button.active-menu-item,
+       .sidebar a.active-menu-item {
+         color: var(--bs-brand-primary) !important;
+         font-weight: 600 !important;
+       }
+
+       .sidebar a.active-submenu-item {
+         color: var(--bs-brand-primary) !important;
+         font-weight: 600 !important;
+       }
 
 // Collapsed submenu initials styling
 .sidebar-collapsed-submenu-initials {
