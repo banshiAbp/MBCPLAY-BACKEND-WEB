@@ -95,6 +95,7 @@ const MaturityRatings: React.FC = () => {
         onStatusToggle={handleStatusToggle}
         onEdit={handleEdit}
         noDataMessage="No maturity ratings found."
+        className="maturity-ratings-table-wrapper"
       />
     </div>
   );

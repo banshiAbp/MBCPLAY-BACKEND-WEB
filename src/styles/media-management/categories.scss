@@ -12,22 +12,29 @@
     color: var(--bs-text-primary);
   }
 
-  // Column-specific classes for CommonTable
-  .categories-table-title {
-    font-weight: 500;
-  }
+  // Table wrapper styling handled by CommonTable component
+  .categories-table-wrapper {
+    background: var(--bs-card-bg);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px var(--bs-shadow-light);
+    // margin-bottom handled by common-table-wrapper
+    // Column-specific classes for CommonTable
+    .categories-table-title {
+      font-weight: 500;
+    }
+    
+    // Description column styling handled by CommonTable
+    .categories-table-status {
+      text-align: center;
+    }
 
-  // Description column styling handled by CommonTable
+    .categories-table-icon {
+      text-align: center;
+    }
 
-  .categories-table-status {
-    text-align: center;
-  }
-
-  .categories-table-icon {
-    text-align: center;
-  }
-
-  .categories-table-operation {
-    text-align: center;
+    .categories-table-operation {
+      text-align: center;
+    }
   }
 }
