@@ -12,187 +12,22 @@
     color: var(--bs-text-primary);
   }
 
-  .categories-action-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 18px;
-    gap: 12px;
-
-    .categories-action-select,
-    .categories-filter-select {
-      background: var(--bs-header-bg);
-      color: var(--bs-white);
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      padding: 8px 16px;
-    }
-
-    .categories-search-input {
-      background: var(--bs-header-bg);
-      color: var(--bs-white);
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      padding: 8px 16px;
-      margin-right: 8px;
-    }
-
-    .categories-advanced-filter-btn,
-    .categories-export-btn {
-      background: var(--bs-header-bg);
-      color: var(--bs-white);
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      padding: 8px 24px;
-      font-weight: 600;
-      margin-right: 8px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-    }
-
-    .categories-apply-btn,
-    .categories-new-btn {
-      background: var(--bs-primary-red);
-      color: var(--bs-white);
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      padding: 8px 24px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      &:hover {
-        background: var(--bs-primary-hover-red);
-      }
-    }
-
-    .categories-btn-icon {
-      display: inline-flex;
-      align-items: center;
-      font-size: 1.1em;
-      margin-right: 4px;
-      cursor: pointer;
-    }
-
-    .categories-action-spacer {
-      flex: 1;
-    }
+  // Column-specific classes for CommonTable
+  .categories-table-title {
+    font-weight: 500;
   }
 
-  .categories-table-container {
-    background: var(--bs-card-bg);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px var(--bs-shadow-light);
-    padding: 24px;
+  // Description column styling handled by CommonTable
 
-    .categories-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-
-      thead {
-        .categories-table-header-row {
-          background: var(--bs-header-bg);
-          color: var(--bs-white);
-          font-weight: 600;
-          font-size: 15px;
-
-          th {
-            padding: 14px 10px;
-            text-align: left;
-            height: 56px;
-            vertical-align: middle;
-
-            &.categories-table-header-checkbox {
-              width: 40px;
-              padding-left: 0;
-              padding-right: 0;
-              text-align: center;
-              vertical-align: middle;
-            }
-            &.categories-table-header-status {
-              width: 100px;
-              text-align: center;
-            }
-            &.categories-table-header-icon {
-              width: 80px;
-              text-align: center;
-            }
-            &.categories-table-header-operation {
-              width: 100px;
-              text-align: center;
-            }
-          }
-        }
-      }
-
-      tbody {
-        .categories-table-row {
-          border-bottom: 1px solid var(--bs-header-bg);
-          color: var(--bs-white);
-          background: var(--bs-secondary-bg);
-
-          td {
-            padding: 14px 10px;
-            height: 56px;
-            vertical-align: middle;
-
-            &.categories-table-checkbox {
-              text-align: center;
-              padding-left: 0;
-              padding-right: 0;
-              vertical-align: middle;
-            }
-            &.categories-table-title {
-              font-weight: 500;
-            }
-            &.categories-table-status,
-            &.categories-table-icon,
-            &.categories-table-operation {
-              text-align: center;
-            }
-
-            .categories-table-description-more {
-              color: var(--bs-primary-red);
-              cursor: pointer;
-              font-weight: 600;
-            }
-
-            .categories-table-icon-img {
-              width: 32px;
-              height: 32px;
-              border-radius: 6px;
-              background: var(--bs-header-bg);
-            }
-
-            .categories-table-edit-btn {
-              cursor: pointer;
-              background: var(--bs-primary-orange);
-              color: var(--bs-white);
-              border-radius: 6px;
-              padding: 6px 10px;
-              margin-right: 6px;
-              font-weight: 600;
-            }
-          }
-        }
-      }
-    }
+  .categories-table-status {
+    text-align: center;
   }
 
-  .categories-loading {
-    color: var(--bs-white);
-    padding: 32px;
+  .categories-table-icon {
+    text-align: center;
   }
-  .categories-error {
-    color: red;
-    padding: 32px;
+
+  .categories-table-operation {
+    text-align: center;
   }
 }
