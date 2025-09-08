@@ -28,6 +28,7 @@ const ManageAdvertisement: React.FC = () => {
 
   useEffect(() => {
     if (isEdit && id) {
+      console.log("Fetching advertisement detail for ID:", id);
       fetchAdvertisementDetail(id);
     }
   }, [isEdit, id]);
@@ -42,10 +43,12 @@ const ManageAdvertisement: React.FC = () => {
         return;
       }
 
+      console.log("Calling getAdvertisementDetail with ID:", advertisementId);
       const { data } = await getAdvertisementDetail({
         id: advertisementId,
         token,
       });
+      console.log("Advertisement detail response:", data);
 
       const advertisement = transformAdvertisementDetail(data);
       setFormData({

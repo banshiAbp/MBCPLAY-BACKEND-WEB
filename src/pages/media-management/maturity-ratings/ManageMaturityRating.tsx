@@ -56,6 +56,17 @@ function ManageMaturityRating() {
     }
   }, [id, navigate]);
 
+  const handleReset = () => {
+    setTitle("");
+    setDescription("");
+    setCode("");
+    setStatus(true);
+    setTitleError("");
+    setCodeError("");
+    setFormMessage("");
+    setFormMessageType("");
+  };
+
   const handleSave = async () => {
     if (sessionExpired) return;
     setTitleError("");
@@ -105,6 +116,7 @@ function ManageMaturityRating() {
       setFormMessageType("error");
     } finally {
       setSaving(false);
+      setTimeout(() => navigate("/media-management/maturity-ratings"), 2000);
     }
   };
 
@@ -117,16 +129,6 @@ function ManageMaturityRating() {
             type="error"
             message={sessionExpired}
             onClose={() => setSessionExpired("")}
-          />
-        )}
-        {formMessage && formMessageType && (
-          <StatusMessage
-            type={formMessageType}
-            message={formMessage}
-            onClose={() => {
-              setFormMessage("");
-              setFormMessageType("");
-            }}
           />
         )}
         <Breadcrumb
@@ -143,8 +145,18 @@ function ManageMaturityRating() {
           </span>
         </div>
         <div className="maturity-ratings-form-card">
+          {formMessage && formMessageType && (
+            <StatusMessage
+              type={formMessageType}
+              message={formMessage}
+              onClose={() => {
+                setFormMessage("");
+                setFormMessageType("");
+              }}
+            />
+          )}
+          {/* Row 1: Title and Code */}
           <div className="maturity-ratings-form-row">
-            {/* Title */}
             <div className="maturity-ratings-form-col">
               <div className="maturity-ratings-form-label">
                 Title<span className="maturity-ratings-required">*</span>
@@ -164,8 +176,6 @@ function ManageMaturityRating() {
                 </div>
               )}
             </div>
-
-            {/* Code */}
             <div className="maturity-ratings-form-col">
               <div className="maturity-ratings-form-label">
                 Code<span className="maturity-ratings-required">*</span>
@@ -185,34 +195,41 @@ function ManageMaturityRating() {
                 </div>
               )}
             </div>
+          </div>
 
-            {/* Status */}
+          {/* Row 2: Status */}
+          <div className="maturity-ratings-form-row">
             <div className="maturity-ratings-form-col">
               <div className="maturity-ratings-form-label">
                 Status
               </div>
               <div className="maturity-ratings-form-status-row">
-                <span className="maturity-ratings-status-active">Active</span>
                 <ToggleSwitch checked={status} onChange={setStatus} />
               </div>
             </div>
+            <div className="maturity-ratings-form-col">
+              {/* Empty column for alignment */}
+            </div>
           </div>
 
-          {/* Description */}
+          {/* Row 3: Description */}
           <div className="maturity-ratings-form-row">
-            <div className="maturity-ratings-form-col-full">
+            <div className="maturity-ratings-form-col maturity-ratings-form-col-full">
               <div className="maturity-ratings-form-label">Description</div>
               <textarea
                 className="maturity-ratings-form-textarea"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Provide the description of the maturity rating..."
-                rows={4}
+                rows={6}
               />
             </div>
           </div>
 
           <div className="maturity-ratings-form-footer">
+            <button className="maturity-ratings-form-reset-btn" onClick={handleReset}>
+              Reset
+            </button>
             <button className="maturity-ratings-form-save-btn" onClick={handleSave}>
               {id ? "Update" : "Save"}
             </button>

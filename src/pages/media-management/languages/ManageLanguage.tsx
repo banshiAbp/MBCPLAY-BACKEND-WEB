@@ -54,11 +54,11 @@ const ManageLanguage: React.FC = () => {
     try {
       await createOrUpdateLanguage(form, id);
       setSuccess("Language saved successfully");
-      setTimeout(() => navigate("/media-management/languages"), 2000);
     } catch {
       setError("Failed to save language");
     } finally {
       setLoading(false);
+      setTimeout(() => navigate("/media-management/languages"), 2000);
     }
   };
 

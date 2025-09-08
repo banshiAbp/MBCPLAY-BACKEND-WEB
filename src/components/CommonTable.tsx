@@ -58,7 +58,7 @@ const CommonTable: React.FC<CommonTableProps> = ({
 
     // Special handling for status column (supports different naming patterns)
     if ((column.key === "status" || column.key.endsWith("Status")) && typeof value === "boolean" && onStatusToggle) {
-      const id = row.id || row.languageId || row.genreId || row.categoryId;
+      const id = row.id || row.languageId || row.genreId || row.categoryId || row.advertisementId || row.maturityRatingId;
       return (
         <ToggleSwitch
           checked={value}
@@ -105,7 +105,8 @@ const CommonTable: React.FC<CommonTableProps> = ({
 
     // Special handling for action column
     if (column.key === "action" && onEdit) {
-      const id = row.id || row.languageId || row.genreId || row.categoryId;
+      const id = row.id || row.languageId || row.genreId || row.categoryId || row.advertisementId || row.maturityRatingId;
+      console.log("CommonTable action column - row:", row, "extracted ID:", id);
       return (
         <button
           className="common-table-edit-btn"

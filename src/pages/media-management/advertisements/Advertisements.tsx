@@ -75,6 +75,7 @@ const Advertisements: React.FC = () => {
   };
 
   const handleEdit = (id: string) => {
+    console.log("Edit clicked for advertisement ID:", id);
     navigate(`/media-management/advertisements/manage-advertisements/${id}`);
   };
 
