@@ -1,4 +1,6 @@
-// Avatar in navbar header (outside dropdown)
+@use "variable.scss";
+
+// Navbar Profile Styles
 .navbar {
   button {
     background: transparent !important;
@@ -8,6 +10,9 @@
     margin: 0;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
     &:active,
     &:focus,
     &:hover,
@@ -16,6 +21,7 @@
       box-shadow: none !important;
       border: none !important;
     }
+
     .navbar-profile-avatar {
       width: 40px;
       height: 40px;
@@ -29,44 +35,12 @@
       padding: 0;
       outline: none;
       box-sizing: border-box;
+      cursor: pointer;
     }
   }
 }
-// Avatar in navbar header (outside dropdown)
-.navbar {
-  button {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    &:active,
-    &:focus,
-    &:hover,
-    &:visited {
-      background: transparent !important;
-      box-shadow: none !important;
-      border: none !important;
-    }
-    .navbar-profile-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 2px solid var(--bs-primary);
-      object-fit: cover;
-      background: transparent !important;
-      box-shadow: none !important;
-      display: block;
-      margin: 0;
-      padding: 0;
-      outline: none;
-      box-sizing: border-box;
-    }
-  }
-}
-/* Remove any parent background or card */
+
+// Profile Dropdown Styles
 .navbar-profile-dropdown {
   position: absolute;
   right: 0;
@@ -78,7 +52,7 @@
   box-shadow: 0 8px 32px 0 rgba(34, 41, 46, 0.18);
   border: 1px solid var(--bs-border-dropdown);
   z-index: 50;
-  animation: fade-in 0.2s;
+  animation: fade-in 0.2s ease;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -131,7 +105,7 @@
       font-size: 1rem;
       font-weight: 400;
       gap: 0.5rem;
-      transition: background 0.2s;
+      transition: background 0.2s ease;
       cursor: pointer;
 
       &:hover {
@@ -141,6 +115,7 @@
   }
 }
 
+// Animations
 @keyframes fade-in {
   from {
     opacity: 0;

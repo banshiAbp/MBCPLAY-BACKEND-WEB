@@ -1,23 +1,34 @@
-// Breadcrumb styles
+@use "../variable.scss";
+
+// Breadcrumb Component Styles
 .breadcrumb-nav {
   display: flex;
   align-items: center;
   margin-bottom: 40px;
-}
-.breadcrumb-link {
-  color: var(--bs-text-primary);
-  font-size: 15px;
-  opacity: 0.7;
-  cursor: pointer;
-  text-decoration: underline;
-}
-.breadcrumb-current {
-  color: var(--bs-text-primary);
-  font-weight: 600;
-  font-size: 15px;
-}
-.breadcrumb-separator {
-  color: var(--bs-text-primary);
-  margin: 0 8px;
-  opacity: 0.5;
+
+  .breadcrumb-link {
+    color: var(--bs-text-primary);
+    font-size: 15px;
+    opacity: 0.7;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+      color: var(--bs-brand-primary);
+    }
+  }
+
+  .breadcrumb-current {
+    color: var(--bs-text-primary);
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .breadcrumb-separator {
+    color: var(--bs-text-primary);
+    margin: 0 8px;
+    opacity: 0.5;
+  }
 }

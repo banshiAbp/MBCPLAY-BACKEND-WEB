@@ -1,33 +1,76 @@
-$popup-bg: var(--bs-popup-bg);
-$popup-overlay: rgba(0, 0, 0, 0.5);
-$popup-title: var(--bs-text-dark);
-$popup-content: var(--bs-text-content);
-$popup-close-bg: var(--bs-checkbox-checked);
-$popup-close-color: var(--bs-white);
+@use "../variable.scss";
 
+// Details Popup Component Styles
 .details-popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: $popup-overlay;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  animation: fade-in 0.3s ease;
+
+  .details-popup-modal {
+    background: var(--bs-popup-bg);
+    color: var(--bs-text-content);
+    padding: 24px;
+    border-radius: 8px;
+    min-width: 300px;
+    max-width: 90vw;
+    box-shadow: 0 2px 16px var(--bs-shadow-medium);
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    animation: details-popup-fade-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+    .details-popup-title {
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: var(--bs-text-dark);
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .details-popup-content {
+      margin-bottom: 24px;
+      color: var(--bs-text-content);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .details-popup-close {
+      background: var(--bs-checkbox-checked);
+      color: var(--bs-white);
+      border: none;
+      border-radius: 6px;
+      padding: 8px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: var(--bs-brand-primary);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
 }
-.details-popup-modal {
-  background: $popup-bg;
-  color: $popup-content;
-  padding: 24px;
-  border-radius: 8px;
-  min-width: 300px;
-  max-width: 90vw;
-  box-shadow: 0 2px 16px var(--bs-shadow-medium);
-  opacity: 0;
-  transform: translateY(40px) scale(0.98);
-  animation: details-popup-fade-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+// Animations
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes details-popup-fade-in {
@@ -39,25 +82,4 @@ $popup-close-color: var(--bs-white);
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-}
-.details-popup-title {
-  margin-top: 0;
-  margin-bottom: 16px;
-  color: $popup-title;
-  font-size: 20px;
-  font-weight: 600;
-}
-.details-popup-content {
-  margin-bottom: 24px;
-  color: $popup-content;
-  font-size: 16px;
-}
-.details-popup-close {
-  background: $popup-close-bg;
-  color: $popup-close-color;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 24px;
-  font-weight: 600;
-  cursor: pointer;
 }
