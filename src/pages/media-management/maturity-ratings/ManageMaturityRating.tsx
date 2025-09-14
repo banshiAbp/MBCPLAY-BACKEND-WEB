@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { manageMaturityRating } from "../../../services/media-management/maturity-ratings/manageMaturityRatingService";
 import { getMaturityRatingDetail } from "../../../services/media-management/maturity-ratings/getMaturityRatingDetail";
 import { transformMaturityRatingDetail } from "../../../interfaces/media-management/maturity-rating/maturityRatingTransform";
-import ToggleSwitch from "../../../components/ToggleSwitch";
+import FormElementToggleSwitch from "../../../components/FormElementToggleSwitch";
 import Breadcrumb from "../../../components/Breadcrumb";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
@@ -197,20 +197,19 @@ function ManageMaturityRating() {
             </div>
           </div>
 
-          {/* Row 2: Status */}
-          <div className="maturity-ratings-form-row">
-            <div className="maturity-ratings-form-col">
-              <div className="maturity-ratings-form-label">
-                Status
-              </div>
-              <div className="maturity-ratings-form-status-row">
-                <ToggleSwitch checked={status} onChange={setStatus} />
-              </div>
-            </div>
-            <div className="maturity-ratings-form-col">
-              {/* Empty column for alignment */}
-            </div>
-          </div>
+         {/* Row 2: Status */}
+         <div className="maturity-ratings-form-row">
+           <div className="maturity-ratings-form-col">
+             <FormElementToggleSwitch
+               label="Status"
+               checked={status}
+               onChange={setStatus}
+             />
+           </div>
+           <div className="maturity-ratings-form-col">
+             {/* Empty column for alignment */}
+           </div>
+         </div>
 
           {/* Row 3: Description */}
           <div className="maturity-ratings-form-row">

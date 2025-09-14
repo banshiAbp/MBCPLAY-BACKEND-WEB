@@ -7,7 +7,7 @@ import { transformAdvertisementDetail } from "../../../interfaces/media-manageme
 import Breadcrumb from "../../../components/Breadcrumb";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
-import ToggleSwitch from "../../../components/ToggleSwitch";
+import FormElementToggleSwitch from "../../../components/FormElementToggleSwitch";
 import "../../../styles/media-management/manage-advertisements.scss";
 
 const ManageAdvertisement: React.FC = () => {
@@ -115,7 +115,7 @@ const ManageAdvertisement: React.FC = () => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <Loader visible={true} />;
   }
 
   return (
@@ -187,15 +187,11 @@ const ManageAdvertisement: React.FC = () => {
         {/* Row 2: Status */}
         <div className="advertisements-form-row">
           <div className="advertisements-form-col">
-            <div className="advertisements-form-label">
-              Status
-            </div>
-            <div className="advertisements-form-status-row">
-              <ToggleSwitch 
-                checked={formData.advertisementStatus} 
-                onChange={(checked) => setFormData(prev => ({ ...prev, advertisementStatus: checked }))} 
-              />
-            </div>
+            <FormElementToggleSwitch
+              label="Status"
+              checked={formData.advertisementStatus}
+              onChange={(checked) => setFormData(prev => ({ ...prev, advertisementStatus: checked }))}
+            />
           </div>
           <div className="advertisements-form-col">
             {/* Empty column for alignment */}

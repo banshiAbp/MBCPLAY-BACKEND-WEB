@@ -5,7 +5,7 @@ import { createOrUpdateLanguage } from "../../../services/media-management/langu
 import { LanguageType } from "../../../interfaces/media-management/language/languageType";
 import StatusMessage from "../../../components/StatusMessage";
 import Loader from "../../../components/Loader";
-import ToggleSwitch from "../../../components/ToggleSwitch";
+import FormElementToggleSwitch from "../../../components/FormElementToggleSwitch";
 import "../../../styles/media-management/manage-language.scss";
 import Breadcrumb from "../../../components/Breadcrumb";
 
@@ -94,6 +94,7 @@ const ManageLanguage: React.FC = () => {
           </span>
         </div>
         <div className="manage-genres-form-card">
+          {/* Row 1: Title and Font Sample */}
           <div className="manage-genres-form-row">
             <div className="manage-genres-form-col">
               <div className="manage-genres-form-label">Title</div>
@@ -119,14 +120,21 @@ const ManageLanguage: React.FC = () => {
                 required
               />
             </div>
+          </div>
+
+          {/* Row 2: Status */}
+          <div className="manage-genres-form-row">
             <div className="manage-genres-form-col">
-              <div className="manage-genres-form-label">Status</div>
-              <ToggleSwitch
+              <FormElementToggleSwitch
+                label="Status"
                 checked={!!form.languageStatus}
                 onChange={(checked) =>
                   setForm((prev) => ({ ...prev, languageStatus: checked }))
                 }
               />
+            </div>
+            <div className="manage-genres-form-col">
+              {/* Empty column for alignment */}
             </div>
           </div>
           <div className="manage-genres-form-footer">

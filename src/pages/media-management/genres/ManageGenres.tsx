@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Breadcrumb from "../../../components/Breadcrumb";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
-import ToggleSwitch from "../../../components/ToggleSwitch";
+import FormElementToggleSwitch from "../../../components/FormElementToggleSwitch";
 import { Genre } from "../../../interfaces/media-management/genre/genreType";
 import { getGenreDetail } from "../../../services/media-management/genres/getGenreDetail";
 import { submitGenre } from "../../../services/media-management/genres/createOrUpdateGenreService";
@@ -135,11 +135,11 @@ const ManageGenres: React.FC = () => {
           {/* Row 2: Status */}
           <div className="manage-genres-form-row">
             <div className="manage-genres-form-col">
-              <div className="manage-genres-form-label">Status</div>
-              <div className="manage-genres-form-status-row">
-                <span className="manage-genres-status-active">Active</span>
-                <ToggleSwitch checked={status} onChange={setStatus} />
-              </div>
+              <FormElementToggleSwitch
+                label="Status"
+                checked={status}
+                onChange={setStatus}
+              />
             </div>
             <div className="manage-genres-form-col">
               {/* Empty column for alignment */}

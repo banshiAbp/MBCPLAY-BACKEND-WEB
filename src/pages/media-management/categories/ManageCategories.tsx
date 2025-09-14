@@ -4,7 +4,7 @@ import { submitCategory } from "../../../services/media-management/categories/cr
 import { uploadCategoryImage } from "../../../services/media-management/categories/uploadCategory";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCategoryDetail } from "../../../services/media-management/categories/getCategoryDetail";
-import ToggleSwitch from "../../../components/ToggleSwitch";
+import FormElementToggleSwitch from "../../../components/FormElementToggleSwitch";
 import Breadcrumb from "../../../components/Breadcrumb";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
@@ -207,13 +207,11 @@ function ManageCategories() {
           {/* Row 2: Status */}
           <div className="categories-form-row">
             <div className="categories-form-col">
-              <div className="categories-form-label">
-                Status
-              </div>
-              <div className="categories-form-status-row">
-                <span className="categories-status-active">Active</span>
-                <ToggleSwitch checked={status} onChange={setStatus} />
-              </div>
+              <FormElementToggleSwitch
+                label="Status"
+                checked={status}
+                onChange={setStatus}
+              />
             </div>
             <div className="categories-form-col">
               {/* Empty column for alignment */}

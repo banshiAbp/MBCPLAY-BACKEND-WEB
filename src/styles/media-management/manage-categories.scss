@@ -116,6 +116,24 @@
       }
     }
 
+    .categories-status-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(40, 40, 40, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 8px;
+
+      .categories-status-text {
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 500;
+        user-select: none;
+      }
+    }
+
     .categories-form-footer {
       margin-top: 24px;
       padding-top: 20px;
