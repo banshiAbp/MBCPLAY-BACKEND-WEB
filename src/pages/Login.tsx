@@ -81,45 +81,57 @@ const Login = () => {
   };
 
   return (
-    <div className="login-bg">
-      <div className="login-card">
-        <div className="login-logo-row">
+    <div className="login-container">
+      <div className="login-modal">
+        <div className="login-header">
           <span className="login-logo">M</span>
           <span className="login-title">MBCPLAY</span>
         </div>
+        
         <form onSubmit={handleSubmit} className="login-form">
-          <label>Email or Phone</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="demo@mbcplay.com or 987XXXXX10"
-            autoComplete="username"
-            required
-          />
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-            required
-          />
-          <div className="login-options-row">
-            <label className="remember-me">
+          <div className="login-field">
+            <label className="login-label">Email or Phone</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="demo@mbcplay.com or 987XXXXX10"
+              autoComplete="username"
+              required
+              className="login-input"
+            />
+          </div>
+          
+          <div className="login-field">
+            <label className="login-label">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+              required
+              className="login-input"
+            />
+          </div>
+          
+          <div className="login-options">
+            <label className="login-remember">
               <input
                 type="checkbox"
                 checked={remember}
                 onChange={(e) => setRemember(e.target.checked)}
+                className="login-checkbox"
               />
-              Remember Me
+              <span className="login-checkbox-text">Remember Me</span>
             </label>
-            <a href="#" className="forgot-link">
-              Forgot Password?
-            </a>
+            <a href="#" className="login-forgot">Forgot Password?</a>
           </div>
-          {(error || localError) && <div className="login-error">{error || localError}</div>}
-          <button type="submit" className="login-btn" disabled={loading}>
+          
+          {(error || localError) && (
+            <div className="login-error">{error || localError}</div>
+          )}
+          
+          <button type="submit" className="login-button" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>

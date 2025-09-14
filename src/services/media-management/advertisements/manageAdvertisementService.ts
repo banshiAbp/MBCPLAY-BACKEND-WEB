@@ -41,6 +41,7 @@ export const updateAdvertisement = async ({
   data,
   token,
 }: UpdateAdvertisementParams) => {
+  console.log("updateAdvertisement service called with:", { id, data, token });
   const response = await fetchWithAuth(
     `${API_BASE_URL}advertisement/manage/${id}`,
     {
@@ -53,6 +54,7 @@ export const updateAdvertisement = async ({
     }
   );
 
+  console.log("updateAdvertisement response:", response);
   if (!response.ok) {
     throw new Error("Failed to update advertisement");
   }

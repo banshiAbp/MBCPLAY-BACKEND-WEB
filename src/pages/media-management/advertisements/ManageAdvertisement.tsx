@@ -7,6 +7,7 @@ import { transformAdvertisementDetail } from "../../../interfaces/media-manageme
 import Breadcrumb from "../../../components/Breadcrumb";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
+import ToggleSwitch from "../../../components/ToggleSwitch";
 import "../../../styles/media-management/manage-advertisements.scss";
 
 const ManageAdvertisement: React.FC = () => {
@@ -74,6 +75,7 @@ const ManageAdvertisement: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Form submitted!", { isEdit, id, formData });
     setSaving(true);
     setError(null);
     setSuccess(null);
@@ -86,6 +88,7 @@ const ManageAdvertisement: React.FC = () => {
       }
 
       if (isEdit && id) {
+        console.log("Calling updateAdvertisement API with:", { id, data: formData });
         await updateAdvertisement({
           id,
           data: formData,
@@ -93,6 +96,7 @@ const ManageAdvertisement: React.FC = () => {
         });
         setSuccess("Advertisement updated successfully!");
       } else {
+        console.log("Calling createAdvertisement API with:", { data: formData });
         await createAdvertisement({
           data: formData,
           token,
@@ -125,11 +129,13 @@ const ManageAdvertisement: React.FC = () => {
         ]}
       />
 
-      <div className="manage-advertisements-container">
-        <h2 className="manage-advertisements-title">
-          {isEdit ? "Edit Advertisement" : "New Advertisement"}
-        </h2>
+      <div className="advertisements-back-row">
+        <span className="advertisements-back-btn" onClick={() => navigate(-1)}>
+          &laquo; Back
+        </span>
+      </div>
 
+      <form onSubmit={handleSubmit} className="advertisements-form-card">
         {error && (
           <StatusMessage
             type="error"
@@ -146,87 +152,95 @@ const ManageAdvertisement: React.FC = () => {
           />
         )}
 
-        <form onSubmit={handleSubmit} className="manage-advertisements-form">
-          <div className="form-group">
-            <label htmlFor="advertisementTitle" className="form-label">
-              Title *
-            </label>
+        {/* Row 1: Title and URL */}
+        <div className="advertisements-form-row">
+          <div className="advertisements-form-col">
+            <div className="advertisements-form-label">
+              Title<span className="advertisements-required">*</span>
+            </div>
             <input
               type="text"
-              id="advertisementTitle"
-              name="advertisementTitle"
+              className="advertisements-form-input"
               value={formData.advertisementTitle}
               onChange={handleInputChange}
-              className="form-input"
+              name="advertisementTitle"
               required
               placeholder="Enter advertisement title"
             />
           </div>
-
-          <div className="form-group">
-            <label htmlFor="advertisementDescription" className="form-label">
-              Description *
-            </label>
-            <textarea
-              id="advertisementDescription"
-              name="advertisementDescription"
-              value={formData.advertisementDescription}
-              onChange={handleInputChange}
-              className="form-textarea"
-              required
-              placeholder="Enter advertisement description"
-              rows={4}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="advertisementUrl" className="form-label">
-              URL *
-            </label>
+          <div className="advertisements-form-col">
+            <div className="advertisements-form-label">
+              URL<span className="advertisements-required">*</span>
+            </div>
             <input
               type="url"
-              id="advertisementUrl"
-              name="advertisementUrl"
+              className="advertisements-form-input"
               value={formData.advertisementUrl}
               onChange={handleInputChange}
-              className="form-input"
+              name="advertisementUrl"
               required
               placeholder="https://example.com"
             />
           </div>
+        </div>
 
-          <div className="form-group">
-            <label className="form-checkbox-label">
-              <input
-                type="checkbox"
-                name="advertisementStatus"
-                checked={formData.advertisementStatus}
-                onChange={handleInputChange}
-                className="form-checkbox"
+        {/* Row 2: Status */}
+        <div className="advertisements-form-row">
+          <div className="advertisements-form-col">
+            <div className="advertisements-form-label">
+              Status
+            </div>
+            <div className="advertisements-form-status-row">
+              <ToggleSwitch 
+                checked={formData.advertisementStatus} 
+                onChange={(checked) => setFormData(prev => ({ ...prev, advertisementStatus: checked }))} 
               />
-              <span className="form-checkbox-text">Active</span>
-            </label>
+            </div>
           </div>
+          <div className="advertisements-form-col">
+            {/* Empty column for alignment */}
+          </div>
+        </div>
 
-          <div className="form-actions">
-            <button
-              type="button"
-              onClick={() => navigate("/media-management/advertisements")}
-              className="btn btn-secondary"
-              disabled={saving}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={saving}
-            >
-              {saving ? "Saving..." : isEdit ? "Update" : "Create"}
-            </button>
+        {/* Row 3: Description */}
+        <div className="advertisements-form-row">
+          <div className="advertisements-form-col advertisements-form-col-full">
+            <div className="advertisements-form-label">Description</div>
+            <textarea
+              className="advertisements-form-textarea"
+              value={formData.advertisementDescription}
+              onChange={handleInputChange}
+              name="advertisementDescription"
+              required
+              placeholder="Enter advertisement description"
+              rows={6}
+            />
           </div>
-        </form>
-      </div>
+        </div>
+
+        <div className="advertisements-form-footer">
+          <button 
+            type="button" 
+            className="advertisements-form-reset-btn" 
+            onClick={() => setFormData({
+              advertisementTitle: "",
+              advertisementDescription: "",
+              advertisementUrl: "",
+              advertisementStatus: true,
+            })}
+            disabled={saving}
+          >
+            Reset
+          </button>
+          <button 
+            type="submit" 
+            className="advertisements-form-save-btn" 
+            disabled={saving}
+          >
+            {saving ? "Saving..." : isEdit ? "Update" : "Create"}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

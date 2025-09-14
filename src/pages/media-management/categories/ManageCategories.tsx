@@ -144,16 +144,6 @@ function ManageCategories() {
             onClose={() => setSessionExpired("")}
           />
         )}
-        {formMessage && formMessageType && (
-          <StatusMessage
-            type={formMessageType}
-            message={formMessage}
-            onClose={() => {
-              setFormMessage("");
-              setFormMessageType("");
-            }}
-          />
-        )}
         <Breadcrumb
           items={[
             { label: "Dashboard", path: "/dashboard" },
@@ -168,8 +158,19 @@ function ManageCategories() {
           </span>
         </div>
         <div className="categories-form-card">
+          {formMessage && formMessageType && (
+            <StatusMessage
+              type={formMessageType}
+              message={formMessage}
+              onClose={() => {
+                setFormMessage("");
+                setFormMessageType("");
+              }}
+            />
+          )}
+
+          {/* Row 1: Image Upload and Name */}
           <div className="categories-form-row">
-            {/* Image Upload */}
             <div className="categories-form-col">
               <ImageUpload
                 imageUrl={imageUrl}
@@ -182,7 +183,6 @@ function ManageCategories() {
                 label="Category Image"
               />
             </div>
-            {/* Name */}
             <div className="categories-form-col">
               <div className="categories-form-label">
                 Name<span className="categories-required">*</span>
@@ -201,7 +201,13 @@ function ManageCategories() {
                   {titleError}
                 </div>
               )}
-              <div className="categories-form-label categories-form-label-status">
+            </div>
+          </div>
+
+          {/* Row 2: Status */}
+          <div className="categories-form-row">
+            <div className="categories-form-col">
+              <div className="categories-form-label">
                 Status
               </div>
               <div className="categories-form-status-row">
@@ -209,8 +215,14 @@ function ManageCategories() {
                 <ToggleSwitch checked={status} onChange={setStatus} />
               </div>
             </div>
-            {/* Description */}
             <div className="categories-form-col">
+              {/* Empty column for alignment */}
+            </div>
+          </div>
+
+          {/* Row 3: Description */}
+          <div className="categories-form-row">
+            <div className="categories-form-col categories-form-col-full">
               <div className="categories-form-label">Description</div>
               <textarea
                 className="categories-form-textarea"
@@ -221,7 +233,23 @@ function ManageCategories() {
               />
             </div>
           </div>
+
           <div className="categories-form-footer">
+            <button 
+              className="categories-form-reset-btn" 
+              onClick={() => {
+                setName("");
+                setDescription("");
+                setImageUrl("");
+                setStatus(true);
+                setTitleError("");
+                setFormMessage("");
+                setFormMessageType("");
+              }}
+              disabled={saving}
+            >
+              Reset
+            </button>
             <button className="categories-form-save-btn" onClick={handleSave}>
               {id ? "Update" : "Save"}
             </button>

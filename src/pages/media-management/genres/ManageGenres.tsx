@@ -83,16 +83,6 @@ const ManageGenres: React.FC = () => {
     <>
       <Loader visible={saving || loading} />
       <div className="manage-genres-page">
-        {formMessage && formMessageType && (
-          <StatusMessage
-            type={formMessageType}
-            message={formMessage}
-            onClose={() => {
-              setFormMessage("");
-              setFormMessageType("");
-            }}
-          />
-        )}
         <Breadcrumb
           items={[
             { label: "Dashboard", path: "/dashboard" },
@@ -107,64 +97,91 @@ const ManageGenres: React.FC = () => {
           </span>
         </div>
         <div className="manage-genres-form-card">
+          {formMessage && formMessageType && (
+            <StatusMessage
+              type={formMessageType}
+              message={formMessage}
+              onClose={() => {
+                setFormMessage("");
+                setFormMessageType("");
+              }}
+            />
+          )}
+
+          {/* Row 1: Title and Code */}
           <div className="manage-genres-form-row">
             <div className="manage-genres-form-col">
-              <div className="manage-genres-form-card">
-                {loading ? (
-                  <Loader visible={true} />
-                ) : (
-                  <>
-                    <div className="manage-genres-form-row">
-                      <div className="manage-genres-form-col">
-                        <div className="manage-genres-form-label">Title</div>
-                        <input
-                          className="manage-genres-form-input"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                          placeholder="Genre Title"
-                        />
-                      </div>
-                      <div className="manage-genres-form-col">
-                        <div className="manage-genres-form-label">Code</div>
-                        <input
-                          className="manage-genres-form-input"
-                          value={code}
-                          onChange={(e) => setCode(e.target.value)}
-                          placeholder="Genre Code"
-                        />
-                      </div>
-                      <div className="manage-genres-form-col">
-                        <div className="manage-genres-form-label">Status</div>
-                        <ToggleSwitch checked={status} onChange={setStatus} />
-                      </div>
-                    </div>
-                    <div className="manage-genres-form-row">
-                      <div className="manage-genres-form-col">
-                        <div className="manage-genres-form-label">
-                          Description
-                        </div>
-                        <textarea
-                          className="manage-genres-form-textarea"
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                          placeholder="Genre Description"
-                          rows={6}
-                        />
-                      </div>
-                    </div>
-                    <div className="manage-genres-form-footer">
-                      <button
-                        className="manage-genres-form-save-btn"
-                        onClick={handleSave}
-                        disabled={saving}
-                      >
-                        {id ? "Update" : "Save"}
-                      </button>
-                    </div>
-                  </>
-                )}
+              <div className="manage-genres-form-label">
+                Title<span className="manage-genres-required">*</span>
+              </div>
+              <input
+                className="manage-genres-form-input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Genre Title"
+              />
+            </div>
+            <div className="manage-genres-form-col">
+              <div className="manage-genres-form-label">Code</div>
+              <input
+                className="manage-genres-form-input"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                placeholder="Genre Code"
+              />
+            </div>
+          </div>
+
+          {/* Row 2: Status */}
+          <div className="manage-genres-form-row">
+            <div className="manage-genres-form-col">
+              <div className="manage-genres-form-label">Status</div>
+              <div className="manage-genres-form-status-row">
+                <span className="manage-genres-status-active">Active</span>
+                <ToggleSwitch checked={status} onChange={setStatus} />
               </div>
             </div>
+            <div className="manage-genres-form-col">
+              {/* Empty column for alignment */}
+            </div>
+          </div>
+
+          {/* Row 3: Description */}
+          <div className="manage-genres-form-row">
+            <div className="manage-genres-form-col manage-genres-form-col-full">
+              <div className="manage-genres-form-label">Description</div>
+              <textarea
+                className="manage-genres-form-textarea"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Genre Description"
+                rows={6}
+              />
+            </div>
+          </div>
+
+          <div className="manage-genres-form-footer">
+            <button 
+              className="manage-genres-form-reset-btn" 
+              onClick={() => {
+                setTitle("");
+                setDescription("");
+                setCode("");
+                setStatus(true);
+                setFormMessage("");
+                setFormMessageType("");
+              }}
+              disabled={saving}
+            >
+              Reset
+            </button>
+            <button
+              className="manage-genres-form-save-btn"
+              onClick={handleSave}
+              disabled={saving}
+            >
+              {id ? "Update" : "Save"}
+            </button>
           </div>
         </div>
       </div>
