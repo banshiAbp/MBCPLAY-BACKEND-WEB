@@ -8,6 +8,8 @@ import Breadcrumb from "../../../components/Breadcrumb";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
 import CommonTable, { TableColumn } from "../../../components/CommonTable";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import "../../../styles/media-management/advertisements.scss";
 
 const Advertisements: React.FC = () => {
@@ -17,6 +19,7 @@ const Advertisements: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const token = useSelector((state: RootState) => state.auth.token);
 
   // Define table columns
   const columns: TableColumn[] = [
@@ -43,12 +46,11 @@ const Advertisements: React.FC = () => {
   ];
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       fetchAdvertisements(token, currentPage);
     }
     // eslint-disable-next-line
-  }, [currentPage]);
+  }, [currentPage, token]);
 
   const fetchAdvertisements = async (token: string, page: number) => {
     setLoading(true);

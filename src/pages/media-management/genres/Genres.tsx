@@ -8,6 +8,8 @@ import Breadcrumb from "../../../components/Breadcrumb";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
 import CommonTable, { TableColumn } from "../../../components/CommonTable";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import "../../../styles/media-management/genres.scss";
 
 const Genres: React.FC = () => {
@@ -17,6 +19,7 @@ const Genres: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const token = useSelector((state: RootState) => state.auth.token);
 
   // Define table columns
   const columns: TableColumn[] = [
@@ -28,12 +31,11 @@ const Genres: React.FC = () => {
   ];
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       fetchGenres(token, currentPage);
     }
     // eslint-disable-next-line
-  }, [currentPage]);
+  }, [currentPage, token]);
 
   const fetchGenres = async (token: string, page: number) => {
     setLoading(true);

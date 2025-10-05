@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import { PAGE_SIZE } from "../../../config/globalVariable";
 import API_BASE_URL from "../../../config/api";
 import { fetchWithAuth } from "../../../utils/fetchWithAuth";
@@ -19,6 +21,7 @@ const CategoriesPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const token = useSelector((state: RootState) => state.auth.token);
 
   // Define table columns
   const columns: TableColumn[] = [
@@ -30,8 +33,11 @@ const CategoriesPage: React.FC = () => {
   ];
 
   useEffect(() => {
+    if (!token) return;
+    
     const fetchCategories = async () => {
       setLoading(true);
+      setError(null);
       try {
         const response = await fetchWithAuth(
           `${API_BASE_URL}category/list?page_no=${page}`,
@@ -65,7 +71,7 @@ const CategoriesPage: React.FC = () => {
     };
 
     fetchCategories();
-  }, [page, navigate]);
+  }, [page, token, navigate]);
 
   const handleStatusToggle = (id: string) => {
     setCategories((prev) =>

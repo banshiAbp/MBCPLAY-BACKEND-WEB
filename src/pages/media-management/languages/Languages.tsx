@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
 import StatusMessage from "../../../components/StatusMessage";
 import CommonTable, { TableColumn } from "../../../components/CommonTable";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import "../../../styles/media-management/languages.scss";
 import Breadcrumb from "../../../components/Breadcrumb";
 
@@ -17,6 +19,7 @@ const Languages: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const token = useSelector((state: RootState) => state.auth.token);
 
   // Define table columns
   const columns: TableColumn[] = [
@@ -33,11 +36,10 @@ const Languages: React.FC = () => {
   ];
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       fetchLanguages(token, currentPage);
     }
-  }, [currentPage]);
+  }, [currentPage, token]);
 
   const fetchLanguages = async (token: string, page: number) => {
     setLoading(true);

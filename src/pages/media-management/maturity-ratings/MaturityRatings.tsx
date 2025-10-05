@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import { getMaturityRatingList } from "../../../services/media-management/maturity-ratings/getMaturityRatingList";
 import { MaturityRating } from "../../../interfaces/media-management/maturity-rating/maturityRatingType";
 import { transformMaturityRatingList } from "../../../interfaces/media-management/maturity-rating/maturityRatingTransform";
@@ -17,6 +19,7 @@ const MaturityRatings: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+  const token = useSelector((state: RootState) => state.auth.token);
 
   // Define table columns
   const columns: TableColumn[] = [
@@ -28,8 +31,9 @@ const MaturityRatings: React.FC = () => {
   ];
 
   useEffect(() => {
+    if (!token) return;
     fetchMaturityRatings(currentPage);
-  }, [currentPage]);
+  }, [currentPage, token]);
 
   const fetchMaturityRatings = async (page: number) => {
     setLoading(true);
