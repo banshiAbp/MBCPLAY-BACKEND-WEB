@@ -81,10 +81,6 @@ const Advertisements: React.FC = () => {
     navigate(`/media-management/advertisements/manage-advertisements/${id}`);
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <div className="advertisements-page">
       <Breadcrumb
